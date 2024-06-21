@@ -35,7 +35,9 @@
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="terms_condition">
             <label class="form-check-label" for="terms_condition" id="terms_condition">Check our terms and condition</label>
-          </div>
+        </div>
+        <div class="g-recaptcha my-2" data-sitekey="{{env('RECAPTCHA_SITE_KEY')}}" data-callback="recaptchaDataCallbackRegister" data-expired-callback="recaptchaExpireCallbackRegister"></div>
+        <input type="text" name="g-recaptcha" id="hiddenRecaptchaRegister">
         <button type="submit" class="btn btn-primary">Submit</button>
         <span class="ms-1">
             Already have an account <a href="{{route('login')}}">Sign In</a> here
