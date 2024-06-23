@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Home Route
-Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/', [HomeController::class,'home'])->name('home');
 
 //Register Route
-Route::get('/register',[AuthController::class,'register'])->name('register');
-Route::post('/register',[AuthController::class,'registerSubmit'])->name('register.submit');
+Route::get('/register', [AuthController::class,'register'])->name('register');
+Route::post('/register', [AuthController::class,'registerSubmit'])->name('register.submit');
+Route::post('/register/check_email_unique', [AuthController::class,'checkEmail'])->name('register.checkEmail');
 
 //Login Route
-Route::get('/login',[AuthController::class,'login'])->name('login');
-Route::post('/login',[AuthController::class,'loginSubmit'])->name('login.submit');
+Route::get('/login', [AuthController::class,'login'])->name('login');
+Route::post('/login', [AuthController::class,'loginSubmit'])->name('login.submit');
