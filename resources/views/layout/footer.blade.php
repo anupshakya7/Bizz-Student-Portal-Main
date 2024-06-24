@@ -14,7 +14,7 @@
     @endif
 
     @if(session('error'))
-        toastr.success("{{session('error')}}",'Error',{timeOut:5000});
+        toastr.error("{{session('error')}}",'Error',{timeOut:5000});
     @endif
 </script>
 @yield('script')
