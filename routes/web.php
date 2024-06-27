@@ -15,27 +15,47 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Home Route
-Route::get('/', [HomeController::class,'home'])->name('home');
 
-//Register Route
-Route::get('/register', [AuthController::class,'register'])->name('register');
-Route::post('/register', [AuthController::class,'registerSubmit'])->name('register.submit');
-Route::post('/register/check_email_unique', [AuthController::class,'checkEmail'])->name('register.checkEmail');
-Route::get('/register/verify-email/{verification_code}',[AuthController::class,'verifyEmail'])->name('register.verifyEmail');
+Route::group(['middleware' => ['revalidate_back_history']], function () {
+    //Home Route
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 
-//Login Route
-Route::get('/login', [AuthController::class,'login'])->name('login');
-Route::post('/login', [AuthController::class,'loginSubmit'])->name('login.submit');
+    Route::group(['prefix' => 'auth', 'middleware' => ['custom_guest']], function () {
+        //Register Route
+        Route::get('/register', [AuthController::class, 'register'])->name('register');
+        Route::post('/register', [AuthController::class, 'registerSubmit'])->name('register.submit');
+        Route::post('/register/check_email_unique', [AuthController::class, 'checkEmail'])->name('register.checkEmail');
 
-//Logout Route
-Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+        //Verify Email
+        Route::get('/verify-email/{verification_code}', [AuthController::class, 'verifyEmail'])->name('register.verifyEmail');
 
-//Dashboard Route
-Route::get('/dashboard',[ProfileController::class,'dashboard'])->name('dashboard');
+        //Login Route
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'loginSubmit'])->name('login.submit');
 
-//Profile Route
-Route::get('/profile/edit-profile',[ProfileController::class,'editProfile'])->name('profile.editProfile');
-Route::put('/profile/edit-profile',[ProfileController::class,'updateProfile'])->name('profile.updateProfile');
+        //Forget Password
+        Route::get('/forget-password',[AuthController::class,'forgetPassword'])->name('forgetPassword');
+        Route::post('/forget-password',[AuthController::class,'forgetPasswordSubmit'])->name('forgetPassword.submit');
 
+        //Reset Password
+        Route::get('/reset-password/{resetcode}',[AuthController::class,'resetPassword'])->name('resetPassword');
+        Route::post('/reset-password/{resetcode}',[AuthController::class,'resetPasswordSubmit'])->name('resetPassword.submit');
 
+    });
+
+    //Logout Route
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('custom_auth');
+
+    Route::group(['prefix' => 'profile', 'middleware' => ['custom_auth']], function () {
+        //Dashboard Route
+        Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
+
+        //Edit Profile
+        Route::get('/edit-profile', [ProfileController::class, 'editProfile'])->name('profile.editProfile');
+        Route::put('/edit-profile', [ProfileController::class, 'updateProfile'])->name('profile.updateProfile');
+
+        //Change Password
+        Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+        Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+    });
+});

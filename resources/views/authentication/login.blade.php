@@ -20,20 +20,20 @@
     </style>
 @endsection
 @section('content')
-    <div class="card p-3 mt-3">
+    <div class="card p-3 mt-5">
         <h2>Login</h2>
         <form action="{{ route('login.submit') }}" method="POST" id="login_form">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}">
+                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Enter Email Address">
                 @if ($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}">
+                <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}" placeholder="Enter Password">
                 @if ($errors->has('password'))
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
@@ -49,20 +49,13 @@
                     <span class="text-danger">{{ $errors->first('terms') }}</span>
                 @endif
             </div>
-            <div class="col-md-12 mb-3">
-                <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"
-                    data-callback="recaptchaDataCallbackLogin" data-expired-callback="recaptchaExpireCallbackLogin">
-                </div>
-                <input type="hidden" name="grecaptcha" id="hiddenRecaptchaLogin">
-                <div id="hiddenRecaptchaLoginError"></div>
-                @if ($errors->has('grecaptcha'))
-                    <span class="text-danger">{{ $errors->first('grecaptcha') }}</span>
-                @endif
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Login</button>
             <span class="ms-1">
-                Don't have an account <a href="{{ route('register') }}">Sign Up</a> here
+                Don't have an account <a href="{{ route('register') }}">Register</a> here
             </span>
+            <div class="mt-2">
+                <a href="{{route('forgetPassword')}}">Forget Password</a>
+            </div>
         </form>
     </div>
 @endsection

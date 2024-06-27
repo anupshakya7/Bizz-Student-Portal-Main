@@ -20,7 +20,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="card p-3 mt-3">
+    <div class="card p-3 mt-5">
         <h2>Register</h2>
         <form action="{{ route('register.submit') }}" method="POST" id="registration_form">
             @csrf
@@ -100,9 +100,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Register</button>
             <span class="ms-1">
-                Already have an account <a href="{{ route('login') }}">Sign In</a> here
+                Already have an account <a href="{{ route('login') }}">Login</a> here
             </span>
         </form>
     </div>
@@ -140,7 +140,7 @@
                         required: true,
                         email: true,
                         remote: {
-                            url: baseUrl + "/register/check_email_unique",
+                            url: baseUrl + "/auth/register/check_email_unique",
                             type: "post",
                             data: {
                                 email: function() {
