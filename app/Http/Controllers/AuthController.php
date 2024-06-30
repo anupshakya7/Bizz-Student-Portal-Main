@@ -126,89 +126,94 @@ class AuthController extends Controller
         }
     }
 
-    public function forgetPassword(){
+    public function forgetPassword()
+    {
         return view('authentication.forget_password');
     }
 
-    public function forgetPasswordSubmit(Request $request){
+    public function forgetPasswordSubmit(Request $request)
+    {
         $request->validate([
-            'email'=>'required|email'
+            'email' => 'required|email'
         ]);
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-        if(!$user){
-            return redirect()->back()->with('error','User not Found.');
-        }else{
+        if(!$user) {
+            return redirect()->back()->with('error', 'User not Found.');
+        } else {
             $reset_code = Str::random(200);
             PasswordReset::create([
-                'user_id'=>$user->id,
-                'reset_code'=> $reset_code
+                'user_id' => $user->id,
+                'reset_code' => $reset_code
             ]);
 
-            Mail::to($user->email)->send(new ForgetPasswordMail($user->firstname,$reset_code));
-            return redirect()->back()->with('success','We have sent you a password reset link. Please check your email.');
-        }
-    }
-    
-    public function resetPassword($resetcode){
-        $passwordResetCode = PasswordReset::where('reset_code',$resetcode)->first();
-        if(!$passwordResetCode || Carbon::now()->subMinutes(10) > $passwordResetCode->created_at){
-            return redirect()->route('forgetPassword')->with('error','Invalid password reset link or link expired.');
-        }else{
-            return view('authentication.reset_password',compact('resetcode'));
+            Mail::to($user->email)->send(new ForgetPasswordMail($user->firstname, $reset_code));
+            return redirect()->back()->with('success', 'We have sent you a password reset link. Please check your email.');
         }
     }
 
-    public function resetPasswordSubmit(Request $request,$resetcode){
-        $passwordResetData = PasswordReset::where('reset_code',$resetcode)->first();
+    public function resetPassword($resetcode)
+    {
+        $passwordResetCode = PasswordReset::where('reset_code', $resetcode)->first();
+        if(!$passwordResetCode || Carbon::now()->subMinutes(10) > $passwordResetCode->created_at) {
+            return redirect()->route('forgetPassword')->with('error', 'Invalid password reset link or link expired.');
+        } else {
+            return view('authentication.reset_password', compact('resetcode'));
+        }
+    }
 
-        if(!$passwordResetData || Carbon::now()->subMinutes(10) > $passwordResetData->created_at){
-            return redirect()->route('forgetPassword')->with('error','Invalid password reset link or link expired.');
-        }else{
+    public function resetPasswordSubmit(Request $request, $resetcode)
+    {
+        $passwordResetData = PasswordReset::where('reset_code', $resetcode)->first();
+
+        if(!$passwordResetData || Carbon::now()->subMinutes(10) > $passwordResetData->created_at) {
+            return redirect()->route('forgetPassword')->with('error', 'Invalid password reset link or link expired.');
+        } else {
             $request->validate([
-                'email'=>'required|email',
-                'password'=>'required|min:6|max:100',
-                'password_confirmation'=>'required|same:password'
+                'email' => 'required|email',
+                'password' => 'required|min:6|max:100',
+                'password_confirmation' => 'required|same:password'
             ]);
 
             $user = User::find($passwordResetData->user_id);
 
-            if($user->email != $request->email){
-                return redirect()->back()->with('error','Enter correct Email.');
-            }else{
+            if($user->email != $request->email) {
+                return redirect()->back()->with('error', 'Enter correct Email.');
+            } else {
                 $passwordResetData->delete();
                 $user->update([
-                    'password'=>bcrypt($request->password)
+                    'password' => bcrypt($request->password)
                 ]);
 
-                return redirect()->route('login')->with('success','Password Successfully Reset!!!');
+                return redirect()->route('login')->with('success', 'Password Successfully Reset!!!');
             }
         }
     }
 
     //Google Login
-    public function handleRedirect(){
+    public function handleRedirect()
+    {
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleCallback(){
+    public function handleCallback()
+    {
         $user = Socialite::driver('google')->user();
-        
-        $data = User::where('email',$user->email)->first();
-        if(is_null($data)){
+
+        $data = User::where('email', $user->email)->first();
+        if(is_null($data)) {
             User::create([
-                'firstname'=>$user->user['given_name'],
-                'lastname'=>$user->user['family_name'],
-                'email'=>$user->email,
-                'email_verification_code'=>$user->user['email_verified'],
-                'email_verified_at'=>Carbon::now(),
-                'password'=>$user->id
+                'firstname' => $user->user['given_name'],
+                'lastname' => $user->user['family_name'],
+                'email' => $user->email,
+                'email_verification_code' => Str::random(40),
+                'email_verified_at' => Carbon::now(),
+                'password' => '123456'
             ]);
-            Auth::login($data);
-            return redirect()->route('dashboard')->with('success', 'Login Successfully!!!');
         }
-        return redirect()->route('login')->with('error','Email Already Exists');
+        auth()->attempt(['email' => $user->email, 'password' => $user->id]);
+        return redirect()->route('dashboard')->with('success', 'Login Successfully!!!');
     }
 
     public function logout()

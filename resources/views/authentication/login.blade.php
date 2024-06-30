@@ -1,69 +1,73 @@
 @extends('layout.main')
 @section('style')
-    <style>
-        label.invalid {
-            color: red;
-            font-size: 14px;
-        }
+<style>
+    label.invalid {
+        color: red;
+        font-size: 14px;
+    }
 
-        input.invalid {
-            border: 2px solid red;
-        }
+    input.invalid {
+        border: 2px solid red;
+    }
 
-        input.success {
-            border: 2px solid green;
-        }
+    input.success {
+        border: 2px solid green;
+    }
 
-        #remember_me {
-            font-size: 15px;
-        }
-    </style>
+    #remember_me {
+        font-size: 15px;
+    }
+</style>
 @endsection
 @section('content')
-    <div class="card p-3 mt-5">
-        <h2>Login</h2>
-        <form action="{{ route('login.submit') }}" method="POST" id="login_form">
-            @csrf
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="Enter Email Address">
-                @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                @endif
+<div class="card p-3 mt-5">
+    <h2>Login</h2>
+    <form action="{{ route('login.submit') }}" method="POST" id="login_form">
+        @csrf
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
+                placeholder="Enter Email Address">
+            @if ($errors->has('email'))
+            <span class="text-danger">{{ $errors->first('email') }}</span>
+            @endif
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}"
+                placeholder="Enter Password">
+            @if ($errors->has('password'))
+            <span class="text-danger">{{ $errors->first('password') }}</span>
+            @endif
+        </div>
+        <div class="col-md-12 mb-3">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="remember_me" {{ old('remember_me') ? 'checked'
+                    : '' }} value="true" id="remember_me">
+                <label class="form-check-label" for="remember_me">Remember Me</label>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}" placeholder="Enter Password">
-                @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                @endif
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="remember_me"
-                        {{ old('remember_me') ? 'checked' : '' }} value="true" id="remember_me">
-                    <label class="form-check-label" for="remember_me">Remember Me</label>
-                </div>
-                <div id="remember_me_error"></div>
-                @if ($errors->has('terms'))
-                    <span class="text-danger">{{ $errors->first('terms') }}</span>
-                @endif
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <span class="ms-1">
-                Don't have an account <a href="{{ route('register') }}">Register</a> here
-            </span>
-            <div class="mt-2">
-                <a href="{{route('forgetPassword')}}">Forget Password</a>
-            </div>
-            <hr>
-            <a href="{{route('google.login')}}" class="btn btn-outline-dark">Sign In With Google</a>
-        </form>
-    </div>
+            <div id="remember_me_error"></div>
+            @if ($errors->has('terms'))
+            <span class="text-danger">{{ $errors->first('terms') }}</span>
+            @endif
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <span class="ms-1">
+            Don't have an account <a href="{{ route('register') }}">Register</a> here
+        </span>
+        <div class="mt-2">
+            <a href="{{route('forgetPassword')}}">Forget Password</a>
+        </div>
+        <hr>
+        <a href="{{route('google.login')}}">
+            <img src="{{asset('images/signin_google.png')}}" alt="google_sign_in" width="200" height="50">
+        </a>
+    </form>
+</div>
 @endsection
 @section('script')
-    <script>
-        function recaptchaDataCallbackLogin(response) {
+<script>
+    function recaptchaDataCallbackLogin(response) {
             $('#hiddenRecaptchaLogin').val(response);
             $('#hiddenRecaptchaLoginError').html('');
         }
@@ -71,9 +75,9 @@
         function recaptchaExpireCallbackLogin() {
             $('#hiddenRecaptchaLogin').val('');
         }
-    </script>
-    <script>
-        // $(document).ready(function(){
+</script>
+<script>
+    // $(document).ready(function(){
         //     $('#login_form').validate({
         //         ignore: ".ignore",
         //         errorClass:"invalid",
@@ -114,5 +118,5 @@
 
         //     })
         // });
-    </script>
+</script>
 @endsection
