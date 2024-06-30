@@ -56,6 +56,8 @@
             <div class="mt-2">
                 <a href="{{route('forgetPassword')}}">Forget Password</a>
             </div>
+            <hr>
+            <a href="{{route('google.login')}}" class="btn btn-outline-dark">Sign In With Google</a>
         </form>
     </div>
 @endsection

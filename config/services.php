@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google'=>[
+        'client_id'=>env('GOOGLE_SOCIALITE_CLIENT_ID'),
+        'client_secret'=>env('GOOGLE_SOCIALITE_CLIENT_SECRET'),
+        'redirect'=>'http://127.0.0.1:8000/auth/google/callback',
+    ]
+
 ];

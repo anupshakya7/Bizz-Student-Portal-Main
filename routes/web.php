@@ -41,6 +41,9 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
         Route::get('/reset-password/{resetcode}',[AuthController::class,'resetPassword'])->name('resetPassword');
         Route::post('/reset-password/{resetcode}',[AuthController::class,'resetPasswordSubmit'])->name('resetPassword.submit');
 
+        //Google Login
+        Route::get('google/login',[AuthController::class,'handleRedirect'])->name('google.login');
+        Route::get('google/callback',[AuthController::class,'handleCallback'])->name('google.login.callback');
     });
 
     //Logout Route

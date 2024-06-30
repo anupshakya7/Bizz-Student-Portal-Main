@@ -10,7 +10,9 @@ use App\Mail\EmailVerificationMail;
 use App\Mail\ForgetPasswordMail;
 use App\Models\PasswordReset;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -183,6 +185,30 @@ class AuthController extends Controller
                 return redirect()->route('login')->with('success','Password Successfully Reset!!!');
             }
         }
+    }
+
+    //Google Login
+    public function handleRedirect(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleCallback(){
+        $user = Socialite::driver('google')->user();
+        
+        $data = User::where('email',$user->email)->first();
+        if(is_null($data)){
+            User::create([
+                'firstname'=>$user->user['given_name'],
+                'lastname'=>$user->user['family_name'],
+                'email'=>$user->email,
+                'email_verification_code'=>$user->user['email_verified'],
+                'email_verified_at'=>Carbon::now(),
+                'password'=>$user->id
+            ]);
+            Auth::login($data);
+            return redirect()->route('dashboard')->with('success', 'Login Successfully!!!');
+        }
+        return redirect()->route('login')->with('error','Email Already Exists');
     }
 
     public function logout()
