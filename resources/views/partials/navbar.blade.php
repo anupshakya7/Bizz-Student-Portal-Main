@@ -7,17 +7,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          @if(auth()->check())
             <li class="nav-item">
               <a class="nav-link {{(request()->route()->getName() == 'dashboard') ? 'active':''}}" aria-current="page" href="{{route('dashboard')}}">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link {{(request()->route()->getName() == 'course.index') ? 'active':''}}" href="{{route('course.index')}}">Courses Search</a>
             </li>
-          @endif
         </ul>
         <form class="d-flex" role="search">
-          @if(auth()->check())
             <div class="dropdown">
               <button class="btn btn-light dropdown-toggle me-4" type="button" id="profileSetup" data-bs-toggle="dropdown" aria-expanded="false">
                 {{auth()->user()->firstname}}
@@ -31,7 +28,6 @@
           {{-- @else
             <a href="{{route('login')}}" class="btn btn-outline-success mx-1" type="submit">Login</a>
             <a href="{{route('register')}}" class="btn btn-outline-danger mx-1" type="submit">Register</a> --}}
-          @endif
         </form>
       </div>
     </div>

@@ -2,3 +2,184 @@ body{
     margin: 0;
     padding: 0;
 }
+
+/* Courses Search */
+.university_search{
+	margin:60px 0;
+}
+.search-top .count .number{
+	color:#174084;
+	font-weight:600;
+	
+}
+.search_result{
+	margin-top:20px;
+	box-shadow: 0px 4px 6px -2px rgba(0,0,0,.14), 0px 8px 16px rgba(0,0,0,.1);
+	border-radius:20px;
+	overflow:hidden;
+}
+.search_result_inner{
+	background:#fff;
+	margin:30px;
+
+}
+.border-line{
+border: 1px solid #adadad;
+}
+
+.university_logo img {
+	max-width: 200px;
+	height: 100px;
+	object-fit: contain;
+	margin: 20px 10px 30px;
+}
+h5.uni_name{
+	text-align: center;
+	border-top: 1px solid #174084;
+	padding: 15px 15px 10px;
+	margin: 0;
+}
+.location{
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	padding:10px;
+	background-color: #f2f2f2;
+}
+.location img{
+	width:70px;
+	height: 30px;
+	object-fit: contain;
+	margin-right: 10px;
+}
+.location h4{
+	font-weight: 600;
+	margin:0;
+}
+.p-20{
+	padding: 0 20px;
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table th,
+table td {
+	border: none;
+	padding: 5px 10px;
+	text-align: left;
+}
+
+table th {
+   background-color:#174084 ;
+   color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+}
+.btn-button{
+	margin-top: 20px;
+	background-color:#174084 ;
+	color: #fff;
+	border: 1px solid #174084;
+	display: inline-block;
+	width:100%;
+	padding: 10px 20px;
+	font-size: 18px;
+	font-weight: 700;
+	transition: all 0.3s ease-in-out;
+	border-radius: 0;
+}
+.btn-button:hover{
+	background-color: #fff;
+	color:#174084;
+}
+.uni_details ul{
+	padding:0;
+	margin:0;
+}
+.uni_details ul li{
+	display:flex;
+	align-items:center;
+	width:50%;
+	float:right;
+	color:#fff;
+	font-size:18px;
+	font-weight:600;
+	background:#174084;
+	padding:0 20px;
+}
+.uni_details ul li:first-child{
+	background : #D21B0F;
+	text-align:left;
+}
+.uni_details h3{
+	font-weight: 600;
+	padding: 10px 20px;
+	display: inline-block;
+	width:100%;
+font-size:22px;
+}
+
+.search_result.intake{
+	padding: 0px 15px 30px;
+}
+.search_result.intake .search_result_inner{
+	margin:30px 0 0;
+}
+.search_result.intake .university_logo img{
+	margin:10px 0 20px;
+}
+.search_result.intake .search_result_inner h3{
+	text-align:Center;
+	font-size:20px;
+	padding:20px 20px 0;
+	margin:0;
+	}
+.search_result.intake .uni_details ul li{
+	width:100%;
+	padding:10px;
+	text-align:center;
+	font-size: 16px;
+} 
+.search_result .uni_details{
+	position:relative;
+	padding-bottom:70px;
+
+}
+.search_result .uni_details .button{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0px;
+}
+
+ul.pagination{
+	margin:20px 0 20px 0;
+}
+
+@media(max-width:767px){
+	.uni_details h3{
+		font-size:16px;
+	}
+	h5.uni_name{
+		font-size:16px;
+	}
+	.university_logo img,
+	.search_result.intake .university_logo img{
+	margin: 20px;
+	}
+	.uni_details ul li{
+		width:100%;
+	}
+	.uni_details table th, .uni_details table td{
+		padding:5px;
+	}
+	.uni_details table th{
+		font-size:14px;
+	}
+	.uni_details table td{
+		font-size:12px;
+	}
+}
+/* Courses Search */

@@ -209,10 +209,11 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'email_verification_code' => Str::random(40),
                 'email_verified_at' => Carbon::now(),
-                'password' => '123456'
+                'password' => bcrypt('123456')
             ]);
         }
-        auth()->attempt(['email' => $user->email, 'password' => $user->id]);
+        auth()->attempt(['email' => $user->email, 'password' => '123456']);
+
         return redirect()->route('dashboard')->with('success', 'Login Successfully!!!');
     }
 

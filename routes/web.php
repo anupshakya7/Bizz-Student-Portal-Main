@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseSearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -34,31 +35,45 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
         Route::post('/login', [AuthController::class, 'loginSubmit'])->name('login.submit');
 
         //Forget Password
-        Route::get('/forget-password',[AuthController::class,'forgetPassword'])->name('forgetPassword');
-        Route::post('/forget-password',[AuthController::class,'forgetPasswordSubmit'])->name('forgetPassword.submit');
+        Route::get('/forget-password', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
+        Route::post('/forget-password', [AuthController::class, 'forgetPasswordSubmit'])->name('forgetPassword.submit');
 
         //Reset Password
-        Route::get('/reset-password/{resetcode}',[AuthController::class,'resetPassword'])->name('resetPassword');
-        Route::post('/reset-password/{resetcode}',[AuthController::class,'resetPasswordSubmit'])->name('resetPassword.submit');
+        Route::get('/reset-password/{resetcode}', [AuthController::class, 'resetPassword'])->name('resetPassword');
+        Route::post('/reset-password/{resetcode}', [AuthController::class, 'resetPasswordSubmit'])->name('resetPassword.submit');
 
         //Google Login
-        Route::get('google/login',[AuthController::class,'handleRedirect'])->name('google.login');
-        Route::get('google/callback',[AuthController::class,'handleCallback'])->name('google.login.callback');
+        Route::get('google/login', [AuthController::class, 'handleRedirect'])->name('google.login');
+        Route::get('google/callback', [AuthController::class, 'handleCallback'])->name('google.login.callback');
     });
 
     //Logout Route
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('custom_auth');
 
-    Route::group(['prefix' => 'profile', 'middleware' => ['custom_auth']], function () {
+    Route::group(['middleware' => ['custom_auth']], function () {
         //Dashboard Route
         Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
 
-        //Edit Profile
-        Route::get('/edit-profile', [ProfileController::class, 'editProfile'])->name('profile.editProfile');
-        Route::put('/edit-profile', [ProfileController::class, 'updateProfile'])->name('profile.updateProfile');
+        //Profile Route
+        Route::prefix('profile')->group(function () {
+            //Edit Profile
+            Route::get('/edit-profile', [ProfileController::class, 'editProfile'])->name('profile.editProfile');
+            Route::put('/edit-profile', [ProfileController::class, 'updateProfile'])->name('profile.updateProfile');
 
-        //Change Password
-        Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
-        Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+            //Change Password
+            Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+            Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+        });
+
+        //Courses Route
+       
     });
+});
+
+Route::prefix('courses')->group(function(){
+    Route::get('/search',[CourseSearchController::class,'index'])->name('course.index');
+    Route::get('/advance-search',[CourseSearchController::class,'advanceSearch'])->name('course.search');
+    Route::get('/universities-api-search',[CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
+    Route::get('/filter_university',[CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
+	Route::get('/filter_course',[CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
 });
