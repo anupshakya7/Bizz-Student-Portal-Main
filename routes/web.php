@@ -66,14 +66,14 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
         });
 
         //Courses Route
-       
+
     });
 });
 
-Route::prefix('courses')->group(function(){
-    Route::get('/search',[CourseSearchController::class,'index'])->name('course.index');
-    Route::get('/advance-search',[CourseSearchController::class,'advanceSearch'])->name('course.search');
-    Route::get('/universities-api-search',[CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
-    Route::get('/filter_university',[CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
-	Route::get('/filter_course',[CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
+Route::prefix('courses')->group(function () {
+    Route::get('/search', [CourseSearchController::class,'index'])->name('course.index');
+    Route::get('/universities-api-search', [CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
+    Route::get('/filter_university', [CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
+    Route::get('/filter_course', [CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
+    Route::get('/filter_intake', [CourseSearchController::class,'filterIntake'])->name('api.filterIntakemonth');
 });

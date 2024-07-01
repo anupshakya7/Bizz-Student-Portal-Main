@@ -6,8 +6,7 @@
 		<div class="col-sm-5 border-line equal_height d-flex align-items-end">
 			<div style="display:inline-block; width:100%;">
 				<div class="university_logo text-center">
-					<img src="https://mis.bizzeducation.com/backend/web/{{$searchdata->university_logo}}"
-						alt="">
+					<img src="https://mis.bizzeducation.com/backend/web/{{$searchdata->university_logo}}" alt="">
 				</div>
 				<h5 class="uni_name d-none d-sm-flex">{{$searchdata->university_name}}</h5>
 				<div class="location d-none d-sm-flex justify-content-center">
@@ -16,12 +15,12 @@
 				</div>
 				<!--<div class="location d-flex d-sm-none justify-content-center">
 					<h4>Intake</h4>
-				</div>-->				
+				</div>-->
 			</div>
 		</div>
 		<div class="col-sm-7 border-line ">
 			<div class="uni_details equal_height">
-				<ul class="heading-top">										
+				<ul class="heading-top">
 					<li class="red justify-content-center">{{$searchdata->intake}}</li>
 					<li class="justify-content-center">{{$searchdata->level}}</li>
 				</ul>
@@ -42,8 +41,22 @@
 						</tr>
 					</tbody>
 				</table>
+				<table>
+					<thead>
+						<tr>
+							<th>Fees</th>
+							<th>Scholarship</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{!empty($searchdata->fees) ? $searchdata->fees: '0'}}</td>
+							<td>{{!empty($searchdata->scholarship) ? $searchdata->scholarship: '0'}}</td>
+						</tr>
+					</tbody>
+				</table>
 				<div class="button text-end">
-					<form method="GET" action="{{route('inquiry')}}">
+					<form method="GET" action="">
 						<input type="hidden" name="cname" value="{{$searchdata->country}}">
 						<input type="hidden" name="uid" value="{{$searchdata->uni_id}}">
 						<input type="hidden" name="couid" value="{{$searchdata->courses_id}}">
@@ -53,10 +66,12 @@
 				</div>
 			</div>
 		</div>
-	</div>                
+	</div>
 </div>
 @endforeach
-{!!$search->onEachSide(1)->links()!!}
+<div class="d-flex justify-content-center">
+	{!!$search->onEachSide(1)->links()!!}
+</div>
 @else
 <h3 style="margin: 30px; text-align: center;">Data Not Found</h3>
 @endif
