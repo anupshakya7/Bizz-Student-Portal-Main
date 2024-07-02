@@ -47,14 +47,14 @@
                         </select>
                     </div>
                     <?php
-                        $course = Illuminate\Support\Facades\DB::connection('mysql2')->select("SELECT DISTINCT courses.id as courses_id,courses.title as courses_title FROM courses JOIN uni_course ON courses.id = uni_course.course_id WHERE courses.title !='any' AND courses.title REGEXP '^[A-Za-z]' ORDER BY courses.title;");
+                        $courses = Illuminate\Support\Facades\DB::connection('mysql2')->select("SELECT DISTINCT courses.id as courses_id,courses.title as courses_title FROM courses JOIN uni_course ON courses.id = uni_course.course_id WHERE courses.title !='any' AND courses.title REGEXP '^[A-Za-z]' ORDER BY courses.title;");
                         ?>
                     <div class="search mx-1">
                         <select class="form-select s-example-basic-single" id="courses" name="courses"
                             style="width: 150px;">
                             <option value="">Select Course</option>
-                            @foreach ($course as $courses)
-                            <option value="{{ $courses->courses_id }}">{{ $courses->courses_title }}</option>
+                            @foreach ($courses as $course)
+                            <option value="{{ $course->courses_id }}">{{ $course->courses_title }}</option>
                             @endforeach
                         </select>
                     </div>

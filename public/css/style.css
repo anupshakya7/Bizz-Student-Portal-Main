@@ -185,9 +185,6 @@ ul.pagination{
 /* Courses Search */
 
 /* Select2 Dropdown */
-.select2-container{
-	width: 100% !important;
-}
 .select2-container--default .select2-selection--single{
 	height: 38px;
 	border: 1px solid #ced4da;

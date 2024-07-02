@@ -76,10 +76,9 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
         });
 
         //Courses Apply Form Route
-        Route::prefix('applynow')->group(function(){
-            Route::get('/',[ApplyFormController::class,'index'])->name('applynow.index');
+        Route::prefix('applynow')->group(function () {
+            Route::get('/', [ApplyFormController::class,'index'])->name('applynow.index');
+            Route::post('/', [ApplyFormController::class,'submit'])->name('applynow.submit');
         });
     });
 });
-
-
