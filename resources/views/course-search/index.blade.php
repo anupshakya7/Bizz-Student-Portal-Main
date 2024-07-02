@@ -92,13 +92,13 @@
                 <div class="search my-1">
                     <label for="fees" class="form-label">Fees (0 to <span id="fees_range"></span>)</label>
                     <input type="range" class="form-range" name="fees" min="0" max="20000" step="500" value="0"
-                        id="fees">
+                        id="fees" disabled>
                 </div>
                 <div class="search my-1">
                     <label for="duration" class="form-label">Scholarships (0 to <span
                             id="scholarships_range"></span>)</label>
                     <input type="range" class="form-range" name="scholarship" min="0" max="5000" step="100" value="0"
-                        id="scholarship">
+                        id="scholarship" disabled>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
                                         <h3>Intake Month Not Found</h3>
                                         @endif
                                         <div class="button text-end">
-                                            <form method="GET" action="">
+                                            <form method="GET" action="{{route('applynow.index')}}">
                                                 <input type="hidden" name="cname" value="{{ $searchdata->country }}">
                                                 <input type="hidden" name="uid" value="{{ $searchdata->id }}">
                                                 <button type="submit" class="btn btn-button btn-primary">Apply</button>
@@ -384,13 +384,14 @@
                     university: university,
                     courses: courses,
                 },
-                success: function(response) {
-
+                success: function(response) { 
                     $('#result_without_course_university').html('');
                     $('#result_course_university').html('');
                     if (courses != '' || university != '') {
                         $('#result_without_course_university').css('display', 'none');
                         $('#result_course_university').css('display', '');
+                        $('#fees').attr('disabled',false);
+                        $('#scholarship').attr('disabled',false);
                         $('#loader').css('display', 'none');
                         $('#result_course_university').html(response);
                         $(".equal_height").matchHeight();
@@ -400,6 +401,8 @@
                     } else {
                         $('#result_course_university').css('display', 'none');
                         $('#result_without_course_university').css('display', '');
+                        $('#fees').attr('disabled',true);
+                        $('#scholarship').attr('disabled',true);
                         $('#loader').css('display', 'none');
                         $('#result_without_course_university').html(response);
                         $(".equal_height").matchHeight();

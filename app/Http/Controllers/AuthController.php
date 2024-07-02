@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Mail\EmailVerificationMail;
 use App\Mail\ForgetPasswordMail;
+use App\Mail\OAuthLoginMail;
 use App\Models\PasswordReset;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class AuthController extends Controller
         $request->validate([
             'firstname' => 'required|min:2|max:100',
             'lastname' => 'required|min:2|max:100',
+            'profile_image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|max:100',
             'password_confirmation' => 'required|same:password',
@@ -47,10 +49,28 @@ class AuthController extends Controller
         );
         $body = json_decode((string) $response->getBody());
 
+        //Handle Image Upload
+        if($request->hasFile('profile_image')){
+            $image = $request->file('profile_image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+
+            //Check if directory Exists if not create
+            $directory = public_path('images/users');
+            if(!file_exists($directory)){
+                mkdir($directory,0777,true);
+            }
+
+            //Move the new image to the directory
+            $image->move($directory,$imageName);
+        }else{
+            $imageName = null; //Set image name to null if not provided
+        }
+
         if ($body->success == true) {
             $user = User::create([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
+                'profile_image' => $imageName,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'email_verification_code' => Str::random(40),
@@ -191,7 +211,7 @@ class AuthController extends Controller
         }
     }
 
-    //Google Login
+    //Socialite Google Login
     public function handleRedirect()
     {
         return Socialite::driver('google')->redirect();
@@ -203,7 +223,7 @@ class AuthController extends Controller
 
         $data = User::where('email', $user->email)->first();
         if(is_null($data)) {
-            User::create([
+            $newUser = User::create([
                 'firstname' => $user->user['given_name'],
                 'lastname' => $user->user['family_name'],
                 'email' => $user->email,
@@ -211,9 +231,15 @@ class AuthController extends Controller
                 'email_verified_at' => Carbon::now(),
                 'password' => bcrypt('123456')
             ]);
-        }
-        auth()->attempt(['email' => $user->email, 'password' => '123456']);
 
+            //Mail For New Register User with there New Password
+            Mail::to($user->email)->send(new OAuthLoginMail($user));
+
+            auth()->login($newUser);
+        }else{
+            auth()->login($data);
+        }
+        
         return redirect()->route('dashboard')->with('success', 'Login Successfully!!!');
     }
 

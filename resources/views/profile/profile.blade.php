@@ -18,10 +18,22 @@
 @section('content')
     <div class="card p-3 mt-3">
         <h2>Edit Profile</h2>
-        <form action="{{route('profile.updateProfile')}}" method="POST" id="edit_profile_form">
+        <form action="{{route('profile.updateProfile')}}" method="POST" id="edit_profile_form" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
+                <div class="col-md-12">
+                    <div id="image-preview-container">
+                        <img id="image-preview" src="{{!empty($user->profile_image) ? asset('images/users/'.$user->profile_image) : asset('images/default.png')}}" alt="Image Preview" style="display:block; border-radius:50%;margin:auto; width:120px; height:120px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile_image" class="form-label">Profile Image</label>
+                        <input type="file" name="profile_image" class="form-control" id="profile_image" accept="image/png, image/gif, image/jpeg" onchange="previewImage(event)">
+                        @if ($errors->has('profile_image'))
+                            <span class="text-danger">{{ $errors->first('profile_image') }}</span>
+                        @endif
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">First Name</label>
@@ -49,6 +61,18 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        function previewImage(event){
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function(){
+                var imagePreview = document.getElementById('image-preview');
+                imagePreview.src = reader.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
     <script>
         $(document).ready(function() {
             $("#edit_profile_form").validate({

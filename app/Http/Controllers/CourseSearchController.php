@@ -154,12 +154,28 @@ class CourseSearchController extends Controller
     //Filter Courses
     public function filterCourse(Request $request)
     {
-        $university = $request->university;
-        if(!empty($university)) {
-            $courses = DB::connection('mysql2')->select('SELECT DISTINCT courses.id as id,courses.title as course FROM universities JOIN uni_course ON universities.id = uni_course.uni_id JOIN courses ON uni_course.course_id = courses.id WHERE 1 AND universities.name != "any" AND courses.title != "any" AND courses.level!="" AND universities.status="ON" AND universities.id="'.$university.'" AND uni_course.status="on" AND courses.title REGEXP "^[A-Za-z]" ORDER BY courses.title');
-        } else {
-            $courses = DB::connection('mysql2')->select('SELECT DISTINCT courses.id as id,courses.title as course FROM universities JOIN uni_course ON universities.id = uni_course.uni_id JOIN courses ON uni_course.course_id = courses.id WHERE 1 AND universities.name != "any" AND courses.title != "any" AND courses.level!="" AND universities.status="ON" AND uni_course.status="on" AND courses.title REGEXP "^[A-Za-z]" ORDER BY courses.title');
+        $select = 'courses.id as id,courses.title as course';
+        $join = 'JOIN uni_course ON universities.id = uni_course.uni_id JOIN courses ON uni_course.course_id = courses.id';
+        $where = '';
+        if(isset($request->university)){
+            $where .= 'AND universities.id="'.$request->university.'"';
         }
+        
+        if(isset($request->intake)){
+            $where .='AND uni_course.intake LIKE "%'.$request->intake.'%"';
+        }
+
+        $afterWhere = 'ORDER BY courses.title';
+
+        $query = 'SELECT DISTINCT '.$select.' FROM universities '.$join.' WHERE 1 AND universities.name != "any" AND courses.title != "any" AND courses.level!="" AND universities.status="ON" AND uni_course.status="on" AND courses.title REGEXP "^[A-Za-z]" '.$where.' '.$afterWhere.'';
+        
+        $courses = DB::connection('mysql2')->select(DB::raw($query));
+
+        // if(!empty($university)) {
+        //     $courses = DB::connection('mysql2')->select('SELECT DISTINCT courses.id as id,courses.title as course FROM universities JOIN uni_course ON universities.id = uni_course.uni_id JOIN courses ON uni_course.course_id = courses.id WHERE 1 AND universities.name != "any" AND courses.title != "any" AND courses.level!="" AND universities.status="ON" AND universities.id="'.$university.'" AND uni_course.status="on" AND courses.title REGEXP "^[A-Za-z]" ORDER BY courses.title');
+        // } else {
+        //     $courses = DB::connection('mysql2')->select('SELECT DISTINCT courses.id as id,courses.title as course FROM universities JOIN uni_course ON universities.id = uni_course.uni_id JOIN courses ON uni_course.course_id = courses.id WHERE 1 AND universities.name != "any" AND courses.title != "any" AND courses.level!="" AND universities.status="ON" AND uni_course.status="on" AND courses.title REGEXP "^[A-Za-z]" ORDER BY courses.title');
+        // }
 
         return response()->json([
             'status' => 200,

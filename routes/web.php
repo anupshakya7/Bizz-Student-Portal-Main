@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplyFormController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseSearchController;
 use App\Http\Controllers\HomeController;
@@ -66,14 +67,19 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
         });
 
         //Courses Route
+        Route::prefix('courses')->group(function () {
+            Route::get('/search', [CourseSearchController::class,'index'])->name('course.index');
+            Route::get('/universities-api-search', [CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
+            Route::get('/filter_university', [CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
+            Route::get('/filter_course', [CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
+            Route::get('/filter_intake', [CourseSearchController::class,'filterIntake'])->name('api.filterIntakemonth');
+        });
 
+        //Courses Apply Form Route
+        Route::prefix('applynow')->group(function(){
+            Route::get('/',[ApplyFormController::class,'index'])->name('applynow.index');
+        });
     });
 });
 
-Route::prefix('courses')->group(function () {
-    Route::get('/search', [CourseSearchController::class,'index'])->name('course.index');
-    Route::get('/universities-api-search', [CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
-    Route::get('/filter_university', [CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
-    Route::get('/filter_course', [CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
-    Route::get('/filter_intake', [CourseSearchController::class,'filterIntake'])->name('api.filterIntakemonth');
-});
+

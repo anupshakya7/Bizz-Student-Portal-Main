@@ -22,9 +22,23 @@
 @section('content')
     <div class="card p-3 mt-5">
         <h2>Register</h2>
-        <form action="{{ route('register.submit') }}" method="POST" id="registration_form">
+        <form action="{{ route('register.submit') }}" method="POST" id="registration_form" enctype="multipart/form-data">
             @csrf
             <div class="row">
+                <div class="col-md-12">
+                    <div id="image-preview-container">
+                        <img id="image-preview" src="{{ asset('images/default.png') }}" alt="Image Preview"
+                            style="display:block; border-radius:50%;margin:auto; width:120px; height:120px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile_image" class="form-label">Profile Image</label>
+                        <input type="file" name="profile_image" class="form-control" id="profile_image"
+                            accept="image/png, image/gif, image/jpeg" onchange="previewImage(event)">
+                        @if ($errors->has('profile_image'))
+                            <span class="text-danger">{{ $errors->first('profile_image') }}</span>
+                        @endif
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">First Name</label>
@@ -118,6 +132,20 @@
         function recaptchaExpireCallbackRegister() {
             $("#hiddenRecaptchaRegister").val();
         }
+
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            console.log(reader);
+
+            reader.onload = function() {
+                var imagePreview = document.getElementById('image-preview');
+                imagePreview.src = reader.result;
+                imagePreview.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
     </script>
     <script>
         $(document).ready(function() {
@@ -126,6 +154,11 @@
                 errorClass: "invalid",
                 validClass: "success",
                 rules: {
+                    profile_image: {
+                        required: true,
+                        accept: 'image/*',
+                        filesize: 2000000 //2MB
+                    },
                     firstname: {
                         required: true,
                         minlenght: 2,
@@ -163,6 +196,11 @@
                     grecaptcha: "required",
                 },
                 messages: {
+                    profile_image: {
+                        required: "Please select an image",
+                        accept: "Please select a valid image format (jpg, jpeg, png, gif)",
+                        filesize: "File size must be less than 2MB"
+                    },
                     firstname: {
                         required: "Please Enter First Name",
                     },
