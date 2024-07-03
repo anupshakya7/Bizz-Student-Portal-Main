@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class ApplyFormController extends Controller
 {
@@ -208,7 +210,7 @@ class ApplyFormController extends Controller
             $crm_data = array(
                 'fullname' => $fullname,
                 'country' => $interest_country,
-                'form_name' => 'Apply Now',
+                'form_name' => $event_name,
                 'form_from' => '6',
                 'address' => $address,
                 'email' => $email,
@@ -242,87 +244,117 @@ class ApplyFormController extends Controller
 
                     foreach($crm_new_documents as $crm_user_document) {
                         $crm_documentsss = (array_merge($crm_documents, $crm_user_document));
-                        $crm_document_insert = DB::connection('mysql1')->table('inquiry_documents')->insert($crm_documentsss);
+                        DB::connection('mysql2')->table('inquiry_documents')->insert($crm_documentsss);
                     }
                 }
             }
 
-            // $msg = '<div style="border:1px solid grey;border-radius:10px;padding:20px;box-shadow:1px 1px 3px;">'.
-            // '<h2 style="color: #d21c10;">'.$event_name.'</h2>'.
-            // '<table>
-            // 	<tr><td>Fullname:</td><td>'.$fullname.'</td></tr>'.
-            //         '<tr><td>Email:</td><td>'.$email.'</td></tr>'.
-            //         '<tr><td>Mobile:</td><td>'.$phone.'</td></tr>'.
-            //         '<tr><td>Address:</td><td>'.$address.'</td></tr>'.
-            //         '<tr><td>Last Qualification:</td><td>'.$qualification.'</td></tr>'.
-            //         '<tr><td>Scores:</td><td>'.$scores.'</td></tr>'.
-            //         '<tr><td>Interested Course:</td><td>'.$course_details->title.'</td></tr>'.
-            //         '<tr><td>Interested Country:</td><td>'.$interest_country.'</td></tr>'.
-            //         '<tr><td>University:</td><td>'.$university_details->name.'</td></tr>'.
-            //         '<tr><td>Confirmation:</td><td>'.$confirm.'</td></tr>'.
-            //     '</table></div>';
+            $msg = '<div style="border:1px solid grey;border-radius:10px;padding:20px;box-shadow:1px 1px 3px;">'.
+            '<h2 style="color: #d21c10;">'.$event_name.'</h2>'.
+            '<table>
+            	<tr><td>Fullname:</td><td>'.$fullname.'</td></tr>'.
+                    '<tr><td>Email:</td><td>'.$email.'</td></tr>'.
+                    '<tr><td>Mobile:</td><td>'.$phone.'</td></tr>'.
+                    '<tr><td>Address:</td><td>'.$address.'</td></tr>'.
+                    '<tr><td>Last Qualification:</td><td>'.$qualification.'</td></tr>'.
+                    '<tr><td>Scores:</td><td>'.$scores.'</td></tr>'.
+                    '<tr><td>Interested Course:</td><td>'.$course_details->title.'</td></tr>'.
+                    '<tr><td>Interested Country:</td><td>'.$interest_country.'</td></tr>'.
+                    '<tr><td>University:</td><td>'.$university_details->name.'</td></tr>'.
+                    '<tr><td>Confirmation:</td><td>'.$confirm.'</td></tr>'.
+                '</table></div>';
 
-            // $thankyou = '<div style="width: 100%;background: #184087;">
-            // <img src="https://bizzeducation.com/img/logoextralarge.png" style="width: 50%; text-align: center;margin: auto; display: block;padding: 30px;" alt="">
-            // </div>
-            // <div style="padding:30px ;">
-            // 	<p><b>Dear '.$request['fullname'].',</b></p>
-            // 	<p>Thank you for your Registration</p>
-            // 	<p>We suggest bringing the following documents while entering this event to do an easy document assessment.</p>
-            // 	<p>1. Passport</p>
-            // 	<p>2. All Academic Document</p>
-            // </div>
-            // <div style="padding: 30px;background: #184087;color: #fff;">
-            // 	<p style="font-size: 20px;"><b>Bizz Education Consultancy</b></p>
-            // 	<p style="margin: 0; padding: 0 0 5px;">Gatthaghar, Sanima Bank (3rd Floor)</p>
-            // 	<p style="margin: 0; padding: 0 0 5px;;">Contact Number : 01-5913733, 01-5913833</p>
-            // 	<p style="margin: 0; padding: 0 0 5px;;">Email : <a href="mailto:nepal.bizzeducationuk@gmail.com" style="color: white;">nepal.bizzeducationuk@gmail.com</a></p>
-            // </div>';
+            $thankyou = '<div style="width: 100%;background: #184087;">
+            <img src="https://bizzeducation.com/img/logoextralarge.png" style="width: 50%; text-align: center;margin: auto; display: block;padding: 30px;" alt="">
+            </div>
+            <div style="padding:30px ;">
+            	<p><b>Dear '.$request['fullname'].',</b></p>
+            	<p>Thank you for your Registration</p>
+            	<p>We suggest bringing the following documents while entering this event to do an easy document assessment.</p>
+            	<p>1. Passport</p>
+            	<p>2. All Academic Document</p>
+            </div>
+            <div style="padding: 30px;background: #184087;color: #fff;">
+            	<p style="font-size: 20px;"><b>Bizz Education Consultancy</b></p>
+            	<p style="margin: 0; padding: 0 0 5px;">Gatthaghar, Sanima Bank (3rd Floor)</p>
+            	<p style="margin: 0; padding: 0 0 5px;;">Contact Number : 01-5913733, 01-5913833</p>
+            	<p style="margin: 0; padding: 0 0 5px;;">Email : <a href="mailto:nepal.bizzeducationuk@gmail.com" style="color: white;">nepal.bizzeducationuk@gmail.com</a></p>
+            </div>';
 
+            $mailsec = new PHPMailer(true);
+            //Server Settings
+            $mailsec->isSMTP();
+            $mailsec->Host = env('MAIL_HOST'); //Set the SMTP server to send through
+            $mailsec->SMTPAuth = true;
+            $mailsec->Username = env('MAIL_USERNAME'); //SMTP Username
+            $mailsec->Password = env('MAIL_PASSWORD'); //SMTP Pasword
+            $mailsec->SMTPSecure = 'tls';
+            $mailsec->Port = 587;
 
-            // //var_dump($thankyou);die();
-            // //var_dump($email);die();
-            // $mailsec = new PHPMailer(true);
-            // //Recipients
-            // $mailsec->setFrom('info@bizzeducation.com', 'Bizz Education');
-            // $mailsec->addAddress($email, 'Bizz Education');
-            // $mailsec->addReplyTo('info@bizzeducation.co.uk', 'Information');
+            //Disable SSL Certificate Verification (Temporary)
+            $mailsec->SMTPOptions = array(
+                'ssl'=>array(
+                    'verify_peer'=>false,
+                    'verify_peer_name'=>false,
+                    'allow_self_signed'=>true
+                )
+            );
 
-            // //Content
-            // $mailsec->isHTML(true);
-            // $mailsec->Subject = 'Thank you for your Registration';
-            // $mailsec->Body    = $thankyou;
-            // $mailsec->AltBody = $thankyou;
-            // $mailsec->send();
+            //Recipients
+            $mailsec->setFrom('info@bizzeducation.com', 'Bizz Education');
+            $mailsec->addAddress($email, 'Bizz Education');
+            $mailsec->addReplyTo('info@bizzeducation.co.uk', 'Information');
 
-            // $mail = new PHPMailer(true);
-            // try {
-            //     //Recipients
-            //     $mail->setFrom('info@bizzeducation.com', 'Bizz Education');
-            //     $mail->addAddress('nepal@bizzeducation.co.uk', 'Bizz Education');
-            //     $mail->addAddress('no-reply@bizzeducation.co.uk', 'Bizz Education');
+            //Content
+            $mailsec->isHTML(true);
+            $mailsec->Subject = 'Thank you for your Registration';
+            $mailsec->Body    = $thankyou;
+            $mailsec->AltBody = $thankyou;
+            $mailsec->send();
 
-            //     //Content
-            //     $mail->isHTML(true);
-            //     $mail->Subject =  $event_name.'['.$fullname.']';
-            //     $mail->Body    = $msg;
-            //     $mail->AltBody = $msg;
+            $mail = new PHPMailer(true);
+            //Server Setting
+            $mail->isSMTP();
+            $mail->Host = env('MAIL_HOST'); //Set the SMTP server to send through
+            $mail->SMTPAuth = true;
+            $mail->Username = env('MAIL_USERNAME'); //SMTP Username
+            $mail->Password = env('MAIL_PASSWORD'); //SMTP Pasword
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-            //     if($mail->send()):
-            //         session()->flash('contact', '<h3>Thank you for your <strong>Registration</strong></h3>
-            // 						<h4>Your message has been sent. Our team will reach you further more process.</h4>
-            // 					');
-            //         return redirect()->back();
-            //     else:
-            //         session()->flash('contact', 'Message could not be sent.');
-            //         return redirect()->back();
-            //     endif;
-            // } catch (Exception $e) {
-            //     session()->flash('contact', 'Message could not be sent. Mailer Error: '.$mail->ErrorInfo);
-            //     return redirect()->back();
-            // }
+            //Disable SSL Certificate Verification (Temporary)
+            $mail->SMTPOptions = array(
+                'ssl'=>array(
+                    'verify_peer'=>false,
+                    'verify_peer_name'=>false,
+                    'allow_self_signed'=>true
+                )
+            );
+
+            try {
+                //Recipients
+                $mail->setFrom('info@bizzeducation.com', 'Bizz Education');
+                $mail->addAddress('anupshk39@gmail.com', 'Bizz Education');
+
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject =  $event_name.'['.$fullname.']';
+                $mail->Body    = $msg;
+                $mail->AltBody = $msg;
+
+                if($mail->send()):
+                    session()->flash('success', 'Thank you for your Registration!!! Your message has been sent. Our team will reach you further more process.');
+                    return redirect()->back();
+                else:
+                    session()->flash('error', 'Message could not be sent.');
+                    return redirect()->back();
+                endif;
+            } catch (Exception $e) {
+                session()->flash('error', 'Message could not be sent. Mailer Error: '.$mail->ErrorInfo);
+                return redirect()->back();
+            }
         } else {
-            session()->flash('contact', 'Your consent is required to receive other communications from Bizz Education.');
+            session()->flash('error', 'Your consent is required to receive other communications from Bizz Education.');
             return redirect()->back();
         }
     }

@@ -31,7 +31,7 @@
 					<h3>Intake Month Not Found</h3>
 					@endif
 					<div class="button text-end">
-						<form method="GET" action="">
+						<form method="GET" action="{{route('applynow.index')}}">
 							<input type="hidden" name="cname" value="{{$searchdata->country}}">
 							<input type="hidden" name="uid" value="{{$searchdata->id}}">
 							<button type="submit" class="btn btn-button btn-primary" style="border:none;">Apply</button>

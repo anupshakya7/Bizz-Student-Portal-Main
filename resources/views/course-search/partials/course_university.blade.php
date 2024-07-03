@@ -56,7 +56,7 @@
 					</tbody>
 				</table>
 				<div class="button text-end">
-					<form method="GET" action="">
+					<form method="GET" action="{{route('applynow.index')}}">
 						<input type="hidden" name="cname" value="{{$searchdata->country}}">
 						<input type="hidden" name="uid" value="{{$searchdata->uni_id}}">
 						<input type="hidden" name="couid" value="{{$searchdata->courses_id}}">
