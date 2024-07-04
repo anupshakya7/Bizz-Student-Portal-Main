@@ -80,5 +80,12 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
             Route::get('/', [ApplyFormController::class,'index'])->name('applynow.index');
             Route::post('/', [ApplyFormController::class,'submit'])->name('applynow.submit');
         });
+
+        //Status Form Route
+        Route::prefix('status')->group(function () {
+            return view('status.index');
+            // Route::get('/', [ApplyFormController::class,'index'])->name('applynow.index');
+            // Route::post('/', [ApplyFormController::class,'submit'])->name('applynow.submit');
+        });
     });
 });

@@ -20,6 +20,7 @@
 </style>
 @endsection
 @section('content')
+
 <div class="card p-3 mt-5">
     <h2>Login</h2>
     <form action="{{ route('login.submit') }}" method="POST" id="login_form">
