@@ -64,21 +64,29 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
             //Change Password
             Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
             Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+
+            //Verify Mobile Number
+            Route::get('/otp', [ProfileController::class, 'otp'])->name('profile.otp');
+            Route::post('/otp/generate', [ProfileController::class, 'generate'])->name('profile.otp.generate');
+            Route::get('/otp/verification', [ProfileController::class, 'checkMobileOTP'])->name('profile.otp.checkmobile');
+            Route::post('/otp/verification', [ProfileController::class, 'verification'])->name('profile.otp.verification');
         });
 
         //Courses Route
         Route::prefix('courses')->group(function () {
-            Route::get('/search', [CourseSearchController::class,'index'])->name('course.index');
-            Route::get('/universities-api-search', [CourseSearchController::class,'searchUniversity'])->name('university.searchapi');
-            Route::get('/filter_university', [CourseSearchController::class,'filterUniversity'])->name('api.filterUniversity');
-            Route::get('/filter_course', [CourseSearchController::class,'filterCourse'])->name('api.filterCourse');
-            Route::get('/filter_intake', [CourseSearchController::class,'filterIntake'])->name('api.filterIntakemonth');
+            Route::get('/search', [CourseSearchController::class, 'index'])->name('course.index');
+            Route::get('/universities-api-search', [CourseSearchController::class, 'searchUniversity'])->name('university.searchapi');
+            Route::get('/filter_university', [CourseSearchController::class, 'filterUniversity'])->name('api.filterUniversity');
+            Route::get('/filter_course', [CourseSearchController::class, 'filterCourse'])->name('api.filterCourse');
+            Route::get('/filter_intake', [CourseSearchController::class, 'filterIntake'])->name('api.filterIntakemonth');
         });
 
-        //Courses Apply Form Route
-        Route::prefix('applynow')->group(function () {
-            Route::get('/', [ApplyFormController::class,'index'])->name('applynow.index');
-            Route::post('/', [ApplyFormController::class,'submit'])->name('applynow.submit');
+        Route::group(['middleware' => ['verify_mobile']], function () {
+            //Courses Apply Form Route
+            Route::prefix('applynow')->group(function () {
+                Route::get('/', [ApplyFormController::class, 'index'])->name('applynow.index');
+                Route::post('/', [ApplyFormController::class, 'submit'])->name('applynow.submit');
+            });
         });
     });
 });
