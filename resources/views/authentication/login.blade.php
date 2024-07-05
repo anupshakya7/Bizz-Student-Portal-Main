@@ -17,54 +17,70 @@
     #remember_me {
         font-size: 15px;
     }
+    
 </style>
 @endsection
 @section('content')
-
-<div class="card p-3 mt-5">
-    <h2>Login</h2>
-    <form action="{{ route('login.submit') }}" method="POST" id="login_form">
-        @csrf
-        <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
-                placeholder="Enter Email Address">
-            @if ($errors->has('email'))
-            <span class="text-danger">{{ $errors->first('email') }}</span>
-            @endif
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}"
-                placeholder="Enter Password">
-            @if ($errors->has('password'))
-            <span class="text-danger">{{ $errors->first('password') }}</span>
-            @endif
-        </div>
-        <div class="col-md-12 mb-3">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="remember_me" {{ old('remember_me') ? 'checked'
-                    : '' }} value="true" id="remember_me">
-                <label class="form-check-label" for="remember_me">Remember Me</label>
+<div class="form_banner" style="background-image:url({{asset('images/login/background.jpg')}});">
+    <div class="form_wrapper login_form">
+        <div class="row box g-0">
+            <div class="col-sm-6 d-none d-sm-block">
+                <img src="{{asset('images/login/students.jpg')}}" alt="students" class="equal_height left_img">
             </div>
-            <div id="remember_me_error"></div>
-            @if ($errors->has('terms'))
-            <span class="text-danger">{{ $errors->first('terms') }}</span>
-            @endif
+            <div class="col-sm-6">
+                <div class="form_inner equal_height">
+                    <div class="logo text-center">
+                        <img src="{{asset('images/logo.png')}}" alt="logo">
+                    </div>
+                    <h3>Log in</h3>
+                    <form action="{{ route('login.submit') }}" method="POST" id="login_form">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
+                                placeholder="Enter Email Address">
+                            @if ($errors->has('email'))
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" value="{{ old('password') }}"
+                                placeholder="Enter Password">
+                            @if ($errors->has('password'))
+                            <span class="text-danger">{{ $errors->first('password') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="remember_me" {{ old('remember_me') ? 'checked'
+                                    : '' }} value="true" id="remember_me">
+                                <label class="form-check-label" for="remember_me">Remember Me</label>
+                            </div>
+                            <div id="remember_me_error"></div>
+                            @if ($errors->has('terms'))
+                            <span class="text-danger">{{ $errors->first('terms') }}</span>
+                            @endif
+                        </div>
+                        <button type="submit" class="btn btn-primary submit">Login</button>
+                        <p class="ms-1">
+                            Don't have an account <a href="{{ route('register') }}">Register</a> here
+                                </p>
+                        <div class="mt-2">
+                            <a href="{{route('forgetPassword')}}">Forget Password</a>
+                        </div>
+                        <hr>
+                        <a href="{{route('google.login')}}">
+                            <img src="{{asset('images/signin_google.png')}}" alt="google_sign_in" style="max-width:200px;">
+                        </a>
+                    </form>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-        <span class="ms-1">
-            Don't have an account <a href="{{ route('register') }}">Register</a> here
-        </span>
-        <div class="mt-2">
-            <a href="{{route('forgetPassword')}}">Forget Password</a>
-        </div>
-        <hr>
-        <a href="{{route('google.login')}}">
-            <img src="{{asset('images/signin_google.png')}}" alt="google_sign_in" width="200" height="50">
-        </a>
-    </form>
+    </div>
+
 </div>
+
 @endsection
 @section('script')
 <script>

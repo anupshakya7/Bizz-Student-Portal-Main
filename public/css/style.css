@@ -224,3 +224,69 @@ ul.pagination{
 .form-group{
 	margin-bottom: 10px;
 }
+
+.submit {
+    border: 1px solid var(--red);
+    background: var(--red);
+    padding: 10px;
+    color: var(--white);
+    display: block;
+	width:100%;
+    text-align: center;
+    border-radius: 8px;
+    transition: 0.2s ease;
+	margin: 10px 0;
+}
+.submit:hover {
+    border: 1px solid var(--primary);
+    background: var(--primary);
+}
+
+/**== Form Css Open ==**/
+.form_banner{
+	background-size:cover;
+	background-position:center;
+}
+.form_wrapper{      
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	min-height:100vh;
+	padding: 60px 20px;
+}
+.form_wrapper .box{
+	border-radius:20px;
+	overflow:hidden;
+	box-shadow:2px 6px 8px -4px rgb(0 0 0 / 30%);
+	max-width:1100px;
+	width:100%;
+}
+img{
+	max-width: 100%;
+}
+.form_wrapper .left_img{
+	object-fit:cover;
+}
+.form_inner {
+    background-color: #fff; 
+    background-image: url('../images/login/icon.png');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.form_inner h3{
+	margin:15px 0;
+	font-weight:500;
+}
+input:focus,
+input:hover{
+	outline: none !important;
+	box-shadow: none !important;
+}
+/**== Form Css Close ==**/

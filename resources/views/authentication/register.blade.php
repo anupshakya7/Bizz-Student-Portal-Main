@@ -20,147 +20,165 @@
     </style>
 @endsection
 @section('content')
-    <div class="card p-3 mt-5">
-        <h2>Register</h2>
-        <form action="{{ route('register.submit') }}" method="POST" id="registration_form" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="image-preview-container">
-                        <img id="image-preview" src="{{ asset('images/default.png') }}" alt="Image Preview"
-                            style="display:block; border-radius:50%;margin:auto; width:120px; height:120px;object-fit: contain;">
+<div class="form_banner" style="background-image:url({{asset('images/login/background.jpg')}});">
+    <div class="form_wrapper register_form">
+        <div class="row box g-0">
+            <div class="col-sm-6 d-none d-sm-block">
+                <img src="{{asset('images/login/register.jpg')}}" alt="students" class="equal_height left_img">
+            </div>
+            <div class="col-sm-6">
+                <div class="form_inner equal_height">
+                    <div class="logo text-center">
+                        <img src="{{asset('images/logo.png')}}" alt="logo">
                     </div>
-                    <div class="mb-3">
-                        <label for="profile_image" class="form-label">Profile Image</label>
-                        <input type="file" name="profile_image" class="form-control" id="profile_image"
-                            accept="image/png, image/gif, image/jpeg" onchange="previewImage(event)">
-                        @if ($errors->has('profile_image'))
-                            <span class="text-danger">{{ $errors->first('profile_image') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="firstname" class="form-label">First Name</label>
-                        <input type="text" name="firstname" class="form-control" id="firstname"
-                            value="{{ old('firstname') }}" placeholder="Enter First Name">
-                        @if ($errors->has('firstname'))
-                            <span class="text-danger">{{ $errors->first('firstname') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="lastname" class="form-label">Last Name</label>
-                        <input type="text" name="lastname" class="form-control" id="lastname"
-                            value="{{ old('lastname') }}" placeholder="Enter Last Name">
-                        @if ($errors->has('lastname'))
-                            <span class="text-danger">{{ $errors->first('lastname') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
-                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
-                            placeholder="Enter Email Address">
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <div class="cpi-input">
-                            <label for="mobile" class="form-label">Mobile Number</label>
-                            <div class="input-group border rounded">
-                                <button class="btn btn-light dropdown-toggle d-flex align-items-center cpi-drop"
-                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="me-1">🇳🇵</span>
-                                </button>
-                                <div class="dropdown-menu w-100">
-                                    <button type="button" class="dropdown-item" data-cpi-icon="🇳🇵" data-cpi-ext="+977"
-                                        data-cpi-min-length="10" data-cpi-max-length="10">
-                                        🇳🇵 Nepal (+977)
-                                    </button>
-                                    <button type="button" class="dropdown-item" data-cpi-icon="🇬🇧" data-cpi-ext="+44"
-                                        data-cpi-min-length="8" data-cpi-max-length="10">
-                                        🇬🇧 United Kingdom (+44)
-                                    </button>
-                                </div>
-                                <span class="input-group-text bg-white text-muted border-0 cpi-ext-txt">+977</span>
-                                <input type="text" class="form-control border-0 phone-input flex-shrink-1"
-                                    style="outline: none;" name="mobile" id="mobile" value="{{ old('mobile') }}"
-                                    pattern="[0-9]+" required minlength="10" maxlength="10">
+                    <form action="{{ route('register.submit') }}" method="POST" id="registration_form" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="image-preview-container">
+                                <img id="image-preview" src="{{ asset('images/default.png') }}" alt="Image Preview"
+                                    style="display:block; border-radius:50% width:80px; height:80px;object-fit: contain; margin:30px auto 10px;">
                             </div>
-                            <input type="hidden" name="country_code" class="country-code-input" value="+977">
+                            <div class="mb-3">
+                                <label for="profile_image" class="form-label">Profile Image</label>
+                                <input type="file" name="profile_image" class="form-control" id="profile_image"
+                                    accept="image/png, image/gif, image/jpeg" onchange="previewImage(event)">
+                                @if ($errors->has('profile_image'))
+                                    <span class="text-danger">{{ $errors->first('profile_image') }}</span>
+                                @endif
+                            </div>
                         </div>
-                        @if ($errors->has('mobile'))
-                            <span class="text-danger">{{ $errors->first('mobile') }}</span>
-                        @endif
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input type="text" name="firstname" class="form-control" id="firstname"
+                                    value="{{ old('firstname') }}" placeholder="Enter First Name">
+                                @if ($errors->has('firstname'))
+                                    <span class="text-danger">{{ $errors->first('firstname') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input type="text" name="lastname" class="form-control" id="lastname"
+                                    value="{{ old('lastname') }}" placeholder="Enter Last Name">
+                                @if ($errors->has('lastname'))
+                                    <span class="text-danger">{{ $errors->first('lastname') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
+                                    placeholder="Enter Email Address">
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <div class="cpi-input">
+                                    <label for="mobile" class="form-label">Mobile Number</label>
+                                    <div class="input-group border rounded">
+                                        <button class="btn btn-light dropdown-toggle d-flex align-items-center cpi-drop"
+                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="me-1">🇳🇵</span>
+                                        </button>
+                                        <div class="dropdown-menu w-100">
+                                            <button type="button" class="dropdown-item" data-cpi-icon="🇳🇵" data-cpi-ext="+977"
+                                                data-cpi-min-length="10" data-cpi-max-length="10">
+                                                🇳🇵 Nepal (+977)
+                                            </button>
+                                            <button type="button" class="dropdown-item" data-cpi-icon="🇬🇧" data-cpi-ext="+44"
+                                                data-cpi-min-length="8" data-cpi-max-length="10">
+                                                🇬🇧 United Kingdom (+44)
+                                            </button>
+                                        </div>
+                                        <span class="input-group-text bg-white text-muted border-0 cpi-ext-txt">+977</span>
+                                        <input type="text" class="form-control border-0 phone-input flex-shrink-1"
+                                            style="outline: none;" name="mobile" id="mobile" value="{{ old('mobile') }}"
+                                            pattern="[0-9]+" required minlength="10" maxlength="10">
+                                    </div>
+                                    <input type="hidden" name="country_code" class="country-code-input" value="+977">
+                                </div>
+                                @if ($errors->has('mobile'))
+                                    <span class="text-danger">{{ $errors->first('mobile') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" name="address" class="form-control" id="address" value="{{ old('address') }}"
+                                    placeholder="Enter Address">
+                                @if ($errors->has('address'))
+                                    <span class="text-danger">{{ $errors->first('address') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" id="password"
+                                    placeholder="Enter Password">
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="c_password" class="form-label">Confirm Password</label>
+                                <input type="password" name="password_confirmation" class="form-control" id="c_password"
+                                    placeholder="Enter Confirm Password">
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="terms"
+                                    {{ old('terms') ? 'checked' : '' }} id="terms_condition">
+                                <label class="form-check-label" for="terms_condition">Check our terms and
+                                    condition</label>
+                            </div>
+                            <div id="terms_error"></div>
+                            @if ($errors->has('terms'))
+                                <span class="text-danger">{{ $errors->first('terms') }}</span>
+                            @endif
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"
+                                data-callback="recaptchaDataCallbackRegister"
+                                data-expired-callback="recaptchaExpireCallbackRegister">
+                            </div>
+                            <input type="hidden" name="grecaptcha" id="hiddenRecaptchaRegister">
+                            <div id="hiddenRecaptchaRegisterError"></div>
+                            @if ($errors->has('grecaptcha'))
+                                <span class="text-danger">{{ $errors->first('grecaptcha') }}</span>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" name="address" class="form-control" id="address" value="{{ old('address') }}"
-                            placeholder="Enter Address">
-                        @if ($errors->has('address'))
-                            <span class="text-danger">{{ $errors->first('address') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Enter Password">
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="c_password" class="form-label">Confirm Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" id="c_password"
-                            placeholder="Enter Confirm Password">
-                        @if ($errors->has('password_confirmation'))
-                            <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="terms"
-                            {{ old('terms') ? 'checked' : '' }} id="terms_condition">
-                        <label class="form-check-label" for="terms_condition">Check our terms and
-                            condition</label>
-                    </div>
-                    <div id="terms_error"></div>
-                    @if ($errors->has('terms'))
-                        <span class="text-danger">{{ $errors->first('terms') }}</span>
-                    @endif
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"
-                        data-callback="recaptchaDataCallbackRegister"
-                        data-expired-callback="recaptchaExpireCallbackRegister">
-                    </div>
-                    <input type="hidden" name="grecaptcha" id="hiddenRecaptchaRegister">
-                    <div id="hiddenRecaptchaRegisterError"></div>
-                    @if ($errors->has('grecaptcha'))
-                        <span class="text-danger">{{ $errors->first('grecaptcha') }}</span>
-                    @endif
+
+                    <button type="submit" class="btn btn-primary submit">Register</button>
+                    <span class="ms-1">
+                        Already have an account <a href="{{ route('login') }}">Login</a> here
+                    </span>
+                    <hr>
+                        <a href="{{route('google.login')}}">
+                            <img src="{{asset('images/signin_google.png')}}" alt="google_sign_in" style="max-width:200px;">
+                        </a>
+                </form>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Register</button>
-            <span class="ms-1">
-                Already have an account <a href="{{ route('login') }}">Login</a> here
-            </span>
-        </form>
+        </div>
     </div>
+
+</div>
 @endsection
 
 @section('script')

@@ -1,26 +1,37 @@
 @extends('layout.main')
 @section('content')
-<div class="card p-3 mt-5">
-    <h2>Forget Password</h2>
-    <form action="{{route('forgetPassword.submit')}}" method="POST" id="forget_password_form">
-        @csrf
-        <div class="row">
-            <div class="col-md-12">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
-                        placeholder="Enter Email Address">
-                    @if ($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                    @endif
+<div class="form_banner" style="background-image:url({{asset('images/login/background.jpg')}});">
+    <div class="form_wrapper forget_form">
+        <div class="row box g-0">
+            <div class="col-sm-6 d-none d-sm-block">
+                <img src="{{asset('images/login/forget.jpg')}}" alt="students" class="equal_height left_img">
+            </div>
+            <div class="col-sm-6">
+                <div class="form_inner equal_height">
+                    <div class="logo text-center">
+                        <img src="{{asset('images/logo.png')}}" alt="logo">
+                    </div>
+                    <h3>Forget Password</h3>
+                    <form action="{{route('forgetPassword.submit')}}" method="POST" id="forget_password_form">
+                        @csrf
+
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}"
+                            placeholder="Enter Email Address">
+                        @if ($errors->has('email'))
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
+                        @endif
+
+                        <button type="submit" class="btn btn-primary submit">Submit</button>
+                        <p class="ms-1">
+                            Have an account <a href="{{ route('login') }}">Login</a> here
+                        </p>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <span class="ms-1">
-            Have an account <a href="{{ route('login') }}">Login</a> here
-        </span>
-    </form>
 </div>
+
 @endsection
