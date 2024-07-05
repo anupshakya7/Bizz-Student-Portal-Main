@@ -15,6 +15,11 @@
             </li>
         </ul>
         <form class="d-flex" role="search">
+            @if(auth()->user()->mobile_verified_at)
+            <a href="{{route('status.index')}}" class="btn btn-outline-success me-2">
+              Status
+            </a>
+            @endif
             <div class="dropdown">
               <button class="btn btn-light dropdown-toggle me-4" type="button" id="profileSetup" data-bs-toggle="dropdown" aria-expanded="false">
                 {{auth()->user()->firstname}}
