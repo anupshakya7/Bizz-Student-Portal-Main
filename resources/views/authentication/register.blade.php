@@ -28,7 +28,7 @@
                 <div class="col-md-12">
                     <div id="image-preview-container">
                         <img id="image-preview" src="{{ asset('images/default.png') }}" alt="Image Preview"
-                            style="display:block; border-radius:50%;margin:auto; width:120px; height:120px;">
+                            style="display:block; border-radius:50%;margin:auto; width:120px; height:120px;object-fit: contain;">
                     </div>
                     <div class="mb-3">
                         <label for="profile_image" class="form-label">Profile Image</label>
@@ -71,6 +71,47 @@
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
+                        <div class="cpi-input">
+                            <label for="mobile" class="form-label">Mobile Number</label>
+                            <div class="input-group border rounded">
+                                <button class="btn btn-light dropdown-toggle d-flex align-items-center cpi-drop"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="me-1">🇳🇵</span>
+                                </button>
+                                <div class="dropdown-menu w-100">
+                                    <button type="button" class="dropdown-item" data-cpi-icon="🇳🇵" data-cpi-ext="+977"
+                                        data-cpi-min-length="10" data-cpi-max-length="10">
+                                        🇳🇵 Nepal (+977)
+                                    </button>
+                                    <button type="button" class="dropdown-item" data-cpi-icon="🇬🇧" data-cpi-ext="+44"
+                                        data-cpi-min-length="8" data-cpi-max-length="10">
+                                        🇬🇧 United Kingdom (+44)
+                                    </button>
+                                </div>
+                                <span class="input-group-text bg-white text-muted border-0 cpi-ext-txt">+977</span>
+                                <input type="text" class="form-control border-0 phone-input flex-shrink-1"
+                                    style="outline: none;" name="mobile" id="mobile" value="{{ old('mobile') }}"
+                                    pattern="[0-9]+" required minlength="10" maxlength="10">
+                            </div>
+                            <input type="hidden" name="country_code" class="country-code-input" value="+977">
+                        </div>
+                        @if ($errors->has('mobile'))
+                            <span class="text-danger">{{ $errors->first('mobile') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" class="form-control" id="address" value="{{ old('address') }}"
+                            placeholder="Enter Address">
+                        @if ($errors->has('address'))
+                            <span class="text-danger">{{ $errors->first('address') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="password"
                             placeholder="Enter Password">
@@ -91,8 +132,8 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="terms" {{ old('terms') ? 'checked' : '' }}
-                            id="terms_condition">
+                        <input type="checkbox" class="form-check-input" name="terms"
+                            {{ old('terms') ? 'checked' : '' }} id="terms_condition">
                         <label class="form-check-label" for="terms_condition">Check our terms and
                             condition</label>
                     </div>

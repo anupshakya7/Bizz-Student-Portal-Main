@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('content')
+@section('style')
 <style>
 
 #myTab{
@@ -14,9 +14,6 @@
 #myTab .nav-item{
 	font-size:17px;
 	background:#174084;
-	/* padding:12px;
-	margin:10px;
-	border-radius:10px; */
 	color:white;
 	transition:0.2s ease-in-out;
 }
@@ -100,7 +97,57 @@
     width: auto;
   }
 }
+.nav-tabs .nav-link{
+  border-radius: 0;
+}
+.nav-tabs{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* background: var(--primary);
+  border-radius:20px; */
+  overflow: hidden;
+  border: 0;
+}
+.nav-tabs li{
+  background: var(--primary);
+  overflow: hidden;
+}
+.nav-tabs li:first-child{
+  border-radius:15px 0 0 15px;
+}
+.nav-tabs li:last-child{
+  border-radius:0 15px 15px 0;
+}
+.nav-tabs .nav-link{
+  padding: 10px 15px;
+  color: var(--white);
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  background: var(--red);
+  color: var(--white);
+}
+.nav-tabs .nav-item button span{
+  font-size: 20px;
+  font-weight: bold;
+}
+table th {
+    font-size: 18px;
+    background: rgba(23, 55, 110, 1);
+    background: -moz-linear-gradient(top, rgba(23, 55, 110, 1) 0%, rgba(20, 114, 168, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(23, 55, 110, 1)), color-stop(100%, rgba(20, 114, 168, 1)));
+    background: -webkit-linear-gradient(top, rgba(23, 55, 110, 1) 0%, rgba(20, 114, 168, 1) 100%);
+    background: -o-linear-gradient(top, rgba(23, 55, 110, 1) 0%, rgba(20, 114, 168, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(23, 55, 110, 1) 0%, rgba(20, 114, 168, 1) 100%);
+    background: linear-gradient(to bottom, rgba(23, 55, 110, 1) 0%, rgba(20, 114, 168, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#17376e', endColorstr='#1472a8', GradientType=0 );
+    color: #fff !important;
+}
 </style>
+@endsection
+@section('content')
+
 <div class="container">
   <h3 class="text-center py-4">
     <span class="label label-success">University of Central Lancashire - Preston</span>

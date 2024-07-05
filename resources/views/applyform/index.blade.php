@@ -16,7 +16,7 @@
                     ?>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card p-4" id="Register_Now">
+                        <div class="card shadow p-4" id="Register_Now">
                             <div class="new-form-wrapper row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -30,7 +30,7 @@
                                     <div class="form-group">
                                         <label for="phone">Contact Number<span class="text-danger sign">*</span></label>
                                         <input type="text" class="form-control" id="phone" name="phone"
-                                            value="{{ old('phone') }}" placeholder="9841XXXXXX" maxlength="10" readonly
+                                            value="{{ old('phone',$user_info->mobile) }}" placeholder="9841XXXXXX" maxlength="10" readonly
                                             required>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <label for="address">Address <span class="text-danger sign">*</span></label>
                                         <input type="text" class="form-control" id="address" name="address"
-                                            value="{{ old('address') }}" placeholder="Your Location">
+                                            value="{{ old('address',$user_info->address) }}" placeholder="Your Location">
                                     </div>
                                 </div>
                                 <div class="col-md-6 ">
@@ -245,7 +245,7 @@
                     </div>
 
                     <div class="col-md-6" id="Register_Now">
-                        <div class="card p-4">
+                        <div class="card shadow p-4">
                             <div class="new-form-wrapper px-3">
                                 <div class="col-lg-12">
                                     <div class="choose-title">Choose Files</div>

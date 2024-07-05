@@ -22,6 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('is_active')->boolean()->default(true);
             $table->string('email_verification_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('country_code');
+            $table->string('mobile');
+            $table->string('mobile_otp_code')->nullable();
+            $table->timestamp('otp_expired_at')->nullable();
+            $table->timestamp('mobile_verified_at')->nullable();
+            $table->string('address');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

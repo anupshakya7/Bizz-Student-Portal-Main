@@ -1,3 +1,25 @@
+:root {
+    --primary: #174084;
+    --lightblue: #4981B7;
+    --blue: #B3CBE7;
+    --red: #D21B0F;
+    --black: #000;
+    --text: #0c0a0b;
+    --grey: #F3F8FC;
+    --greyC: #ccc;
+    --white: #fff;
+    --pColor: #4e4e4e;
+    --footerBG: #2A91D3;
+    --lightgreen: #64FFD9;
+    --h1: 45px;
+    --h2: 36px;
+    --h3: 30px;
+    --h4: 20px;
+    --h5: 18px;
+    --h6: 14px;
+    --p: 16px;
+    --p25: 25px;
+}
 body{
     margin: 0;
     padding: 0;
