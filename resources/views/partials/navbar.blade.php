@@ -1,40 +1,36 @@
 @if(auth()->check())
-<nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{route('dashboard')}}">Bizz Portal</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link {{(request()->route()->getName() == 'dashboard') ? 'active':''}}" aria-current="page" href="{{route('dashboard')}}">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {{(request()->route()->getName() == 'course.index') ? 'active':''}}" href="{{route('course.index')}}">Courses Search</a>
-            </li>
+      <div class="nav_left">
+        <a href="#" class="back btn btn-primary"><i class="fas fa-arrow-left"></i></a>
+        <ul class="breadcrumb">
+          <li><a href="">Home</a></li>
+          <li><i class="fas fa-chevron-right"></i></li>
+          <li>Dashboard</li>
         </ul>
-        <form class="d-flex" role="search">
-            @if(auth()->user()->mobile_verified_at)
-            <a href="{{route('status.index')}}" class="btn btn-outline-success me-2">
-              Status
-            </a>
-            @endif
-            <div class="dropdown">
-              <button class="btn btn-light dropdown-toggle me-4" type="button" id="profileSetup" data-bs-toggle="dropdown" aria-expanded="false">
-                {{auth()->user()->firstname}}
-              </button>
-              <ul class="dropdown-menu" style="left:auto;right: 25px;" aria-labelledby="profileSetup">
-                <li><a class="dropdown-item {{(request()->route()->getName() == 'profile.editProfile') ? 'active':''}}" href="{{route('profile.editProfile')}}">Edit Profile</a></li>
-                <li><a class="dropdown-item {{(request()->route()->getName() == 'profile.changePassword') ? 'active':''}}" href="{{route('profile.changePassword')}}">Change Password</a></li>
-                <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
-              </ul>
-            </div>
-          {{-- @else
-            <a href="{{route('login')}}" class="btn btn-outline-success mx-1" type="submit">Login</a>
-            <a href="{{route('register')}}" class="btn btn-outline-danger mx-1" type="submit">Register</a> --}}
+      </div>
+      <div class="nav_right">
+        <div class="hamburger">
+          <i class="fa fa-bars"></i>
+        </div>
+          <form class="d-flex users_profile" role="search">
+        <div class="dropdown">
+          <a class="dropdown-toggle me-4" type="button" id="profileSetup" aria-expanded="false">
+            <img src="{{auth()->user()->profile_image ? Voyager::image(auth()->user()->profile_image) : asset('images/login/user.png')}}" alt="{{auth()->user()->firstname}}">
+        </a>
+          <ul class="dropdown-menu" style="left:auto;right: 25px;" aria-labelledby="profileSetup">
+            <li><a class="dropdown-item {{(request()->route()->getName() == 'profile.editProfile') ? 'active':''}}" href="{{route('profile.editProfile')}}">Edit Profile</a></li>
+            <li><a class="dropdown-item {{(request()->route()->getName() == 'profile.changePassword') ? 'active':''}}" href="{{route('profile.changePassword')}}">Change Password</a></li>
+            <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+          </ul>
+        </div>
+        {{-- @else
+        <a href="{{route('login')}}" class="btn btn-outline-success mx-1" type="submit">Login</a>
+        <a href="{{route('register')}}" class="btn btn-outline-danger mx-1" type="submit">Register</a> --}}
         </form>
       </div>
+      
+
     </div>
   </nav>
-  @endif
+@endif
