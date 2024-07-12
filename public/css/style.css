@@ -23,8 +23,86 @@
 body{
     margin: 0;
     padding: 0;
+	font-size: 18px;
+}
+.bg_blue{
+		background: var(--primary);
+		color:var(--white)
+}
+.bg_grey{
+		background: var(--grey);
+}
+.mtb-80{
+	margin: 80px 0;
+}
+.mtb-60{
+	margin: 60px 0;
+}
+.mtb-40{
+	margin: 40px 0;
+}
+.mtb-30{
+	margin: 30px 0;
+}
+.mtb-20{
+	margin: 20px 0;
+}
+.ptb-80{
+	padding: 80px 0;
+}
+.ptb-60{
+	padding: 60px 0;
+}
+.ptb-40{
+	padding: 40px 0;
+}
+.ptb-30{
+	padding: 30px 0;
+}
+.ptb-20{
+	padding: 20px 0;
+}
+@media(max-width:767px){
+	.mtb-80{
+		margin: 40px 0;
+	}
+	.mtb-60{
+		margin: 30px 0;
+	}
+	.mtb-40{
+		margin: 20px 0;
+	}
+	.mtb-30{
+		margin: 15px 0;
+	}
+	.mtb-20{
+		margin: 10px 0;
+	}
+	.ptb-80{
+		padding: 40px 0;
+	}
+	.ptb-60{
+		padding: 30px 0;
+	}
+	.ptb-40{
+		padding: 20px 0;
+	}
+	.ptb-30{
+		padding: 15px 0;
+	}
+	.ptb-20{
+		padding: 10px 0;
+	}
 }
 
+a, a:hover, a:focus{
+	text-decoration: none;
+}
+ul{
+	padding: 0;
+	margin: 0;
+	list-style:none;
+}
 /* Courses Search */
 .university_search{
 	margin:60px 0;
@@ -99,22 +177,32 @@ table th {
 	font-size: 16px;
 	font-weight: 600;
 }
-.btn-button{
+.btn-button,
+.nav-button{
 	margin-top: 20px;
 	background-color:var(--primary) ;
 	color: #fff;
 	border: 1px solid var(--primary);
 	display: inline-block;
-	width:100%;
-	padding: 10px 20px;
+	padding: 10px 40px !important;
 	font-size: 18px;
-	font-weight: 700;
+	font-weight: 500;
 	transition: all 0.3s ease-in-out;
-	border-radius: 0;
+	border-radius: 8px;
 }
-.btn-button:hover{
+.btn-button:hover,
+.nav-button:hover{
 	background-color: #fff;
 	color:var(--primary);
+	border: 1px solid var(--primary);
+}
+.btn-white{
+	background: #fff;
+	color:#000;
+}
+.btn-white:hover{
+	background-color:var(--red);
+	color:#fff;
 }
 .uni_details ul{
 	padding:0;
@@ -495,3 +583,220 @@ header nav{
 		max-width:1100px;
 	}
 }
+
+/** Home page Header Css Open**/
+
+.navbar {
+	transition: box-shadow 0.3s ease-in-out;
+	background: #fff;
+}
+.navbar.scrolled {
+	box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.navbar-toggler {
+	position: relative;
+	width: 30px;
+	height: 24px;
+	display: inline-block;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	padding: 0;
+	outline: none;
+}
+.navbar-toggler:focus,
+.navbar-toggler:hover{
+	outline: none;
+	box-shadow: none;
+}
+.navbar-toggler-icon {
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 4px;
+	background-color: #000;
+	border-radius: 2px;
+	transition: all 0.3s ease-in-out;
+}
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background-color: #000;
+	border-radius: 2px;
+	transition: all 0.3s ease-in-out;
+}
+.navbar-toggler-icon::before {
+	top: -10px;
+}
+.navbar-toggler-icon::after {
+	bottom: -10px;
+}
+
+.full_logo{
+	max-width: 80px;;
+}
+/** Home page Header Css Close**/
+
+/**Banner Section css Open**/
+section.banner{
+	background: url('../images/banner/plane.jpg') fixed no-repeat #f3f8fc;
+	padding: 60px 0;
+}
+section.banner h4{
+	color: var(--red);
+	margin-bottom: 10px;
+}
+section.banner h1{
+	margin-bottom: 20px;
+	color: var(--primary);
+	font-size:55px
+}
+section.banner p{
+	font-size: 20px;
+}
+section.banner img{
+	width: 100%;
+}
+/**Banner Section css Close**/
+/**Login Signup Section css Open**/
+.login_signup .inner{
+	padding: 40px 20px;
+	text-align: center;
+	border-radius: 20px;
+	color:#fff;
+}
+.login_signup .inner p{
+	max-width: 800px;
+	margin: 20px auto 0;
+}
+.login_signup .inner .buttons{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap:30px;
+}
+/**Login Signup Section css Close**/
+/* start testimonial */
+.testiomial-wrap{
+	padding: 30px;
+	background: var(--white);
+	border-radius: 20px;
+	overflow: hidden;
+	border: 1px solid var(--greyC);
+	box-shadow: 0 0 10px  var(--greyC);
+	align-items: center;
+  }
+  .testimonial-img-wrap{
+	position: relative;
+	text-align: center;
+  }
+
+  .testimonial-img-wrap .testimonial-images img{
+	border-radius: 50%;
+	width: 100%;
+    opacity: 0;
+    max-height: 240px;
+}
+  .testimonial-content-wrap{
+	margin-right: 20px;
+  }
+  .testimonial-images{
+	border-radius: 50%;
+  }
+  .comma{
+	position: absolute;
+	bottom: 0;
+  }
+  /* end testimonial */
+
+  /* Footer Css open */
+  footer{
+	background: #132d3b;
+	padding: 40px 0;
+	color: var(--white);
+  }
+  footer .footer-logo{
+	max-width:200px;
+  }
+  footer h4{
+	color: var(--white);
+    position: relative;
+    padding-bottom: 4px;
+  }
+  footer h4::before {
+    position: absolute;
+    content: "";
+    width: 20%;
+    height: 2px;
+    background: var(--white);
+    bottom: 0;
+  }
+
+  footer ul{
+	margin: 20px 0 30px;
+	padding: 0;
+	list-style: none;
+  }
+  footer ul li{
+	display: flex;
+	gap:10px;
+	align-items: top;
+	margin-bottom: 10px;
+  }
+  footer ul li a{
+	color: var(--white);
+	transition: all 0.3s ease-in-out;
+  }
+  footer ul li a:hover{
+	color: var(--red);
+  }
+  footer ul li i{
+	font-size: 20px;
+	margin-top: 5px;
+  }
+
+  .copyright-wrapper{
+	background: #09232f;
+	color: var(--white);
+	padding: 15px 5px;
+  }
+  .copyright-wrapper a{
+	color: var(--white);
+	text-decoration: underline;
+  }
+  .footer-social-links{
+	text-align: right;
+  }
+  .footer-social-links a{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background: var(--white);
+	border-radius: 50%;
+	padding: 7px;
+	margin: 0 4px;
+	text-align: center;
+	color:var(--black);
+	transition: all 0.3s ease-in-out;
+  }
+  .footer-social-links a i{
+	font-size: 20px;
+  }
+  .footer-social-links a:hover{
+	background: var(--red);
+	color:var(--white)
+  }
+  @media(max-width:767px){
+	.copyright-wrapper{
+		text-align: center;
+	}
+	.footer-social-links{
+		text-align: center;
+		margin-top: 10px;
+	  }
+  }
+  /* Footer Css Close */

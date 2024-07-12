@@ -43,3 +43,29 @@ $(document).ready(function () {
         }
     });
 });
+
+$(document).ready(function() {
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 0) {
+            $('.navbar').addClass('scrolled');
+        } else {
+            $('.navbar').removeClass('scrolled');
+        }
+    });
+
+    $('.navbar-toggler').click(function() {
+        $(this).toggleClass('collapsed');
+        var isOpen = $(this).attr('aria-expanded') === 'true';
+        $(this).attr('aria-expanded', !isOpen);
+        $('.navbar-collapse').collapse('toggle'); // Toggle the collapse state
+    });
+
+    // Close the menu when clicking outside of it
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.navbar').length && $('.navbar-collapse').hasClass('show')) {
+            $('.navbar-toggler').addClass('collapsed');
+            $('.navbar-toggler').attr('aria-expanded', 'false');
+            $('.navbar-collapse').collapse('hide');
+        }
+    });
+});
