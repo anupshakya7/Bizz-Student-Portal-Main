@@ -190,6 +190,9 @@ table th {
 	transition: all 0.3s ease-in-out;
 	border-radius: 8px;
 }
+.nav-button{
+	margin-top: 0;
+}
 .btn-button:hover,
 .nav-button:hover{
 	background-color: #fff;
