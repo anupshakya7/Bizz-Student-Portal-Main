@@ -16,7 +16,7 @@
           <form class="d-flex users_profile" role="search">
         <div class="dropdown">
           <a class="dropdown-toggle me-4" type="button" id="profileSetup" aria-expanded="false">
-            <img src="{{auth()->user()->profile_image ? Voyager::image(auth()->user()->profile_image) : asset('images/login/user.png')}}" alt="{{auth()->user()->firstname}}">
+            <img src="{{auth()->user()->profile_image ? asset('images/users/'.auth()->user()->profile_image) : asset('images/login/user.png')}}" alt="{{auth()->user()->firstname}}">
         </a>
           <ul class="dropdown-menu" style="left:auto;right: 25px;" aria-labelledby="profileSetup">
             <li><a class="dropdown-item {{(request()->route()->getName() == 'profile.editProfile') ? 'active':''}}" href="{{route('profile.editProfile')}}">Edit Profile</a></li>

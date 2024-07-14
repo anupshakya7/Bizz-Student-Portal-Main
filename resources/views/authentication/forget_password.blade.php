@@ -9,7 +9,9 @@
             <div class="col-sm-6">
                 <div class="form_inner equal_height">
                     <div class="logo text-center">
-                        <img src="{{asset('images/logo.png')}}" alt="logo">
+                        <a class="navbar-brand" href="{{ route('home') }}">
+                            <img src="{{ asset('images/logo-uk.png') }}" alt="logo" class="full_logo">
+                        </a>
                     </div>
                     <h3>Forget Password</h3>
                     <form action="{{route('forgetPassword.submit')}}" method="POST" id="forget_password_form">

@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ApplyFormController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CourseSearchController;
+use App\Http\Controllers\Program\CourseSearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Program\CompareController;
 use App\Http\Controllers\StatusController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['revalidate_back_history']], function () {
     //Home Route
-    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/',[HomeController::class,'home'])->name('home');
 
     Route::group(['prefix' => 'auth', 'middleware' => ['custom_guest']], function () {
         //Register Route
@@ -80,6 +81,11 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
             Route::get('/filter_university', [CourseSearchController::class, 'filterUniversity'])->name('api.filterUniversity');
             Route::get('/filter_course', [CourseSearchController::class, 'filterCourse'])->name('api.filterCourse');
             Route::get('/filter_intake', [CourseSearchController::class, 'filterIntake'])->name('api.filterIntakemonth');
+        });
+
+        Route::prefix('compare-program')->group(function(){
+            Route::get('/',[CompareController::class,'index'])->name('compare.index');
+            Route::get('/compare',[CompareController::class,'compare'])->name('compare');
         });
 
         Route::group(['middleware' => ['verify_mobile']], function () {

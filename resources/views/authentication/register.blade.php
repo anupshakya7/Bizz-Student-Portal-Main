@@ -29,7 +29,9 @@
             <div class="col-sm-6">
                 <div class="form_inner equal_height">
                     <div class="logo text-center">
-                        <img src="{{asset('images/logo.png')}}" alt="logo">
+                        <a class="navbar-brand" href="{{ route('home') }}">
+                            <img src="{{ asset('images/logo-uk.png') }}" alt="logo" class="full_logo">
+                        </a>
                     </div>
                     <form action="{{ route('register.submit') }}" method="POST" id="registration_form" enctype="multipart/form-data">
                     @csrf

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Program;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ class CourseSearchController extends Controller
         ]);
 
         $result_count = count($results);
-        return view('course-search.index', compact('search', 'result_count'));
+        return view('programs.course-search.index', compact('search', 'result_count'));
     }
 
     public function advanceSearch(Request $request)
@@ -99,6 +100,13 @@ class CourseSearchController extends Controller
                 $where .= ' AND universities.uni_intake LIKE "%'.$request->intake.'%"';
             }
         }
+        if(isset($request->fees) && !empty($request->fees)){
+            $where .= ' AND uni_course.tuition_fees BETWEEN 0 AND '.$request->fees;
+        }
+
+        if(isset($request->scholarship) && !empty($request->scholarship)){
+            $where .= ' AND uni_course.scholarship BETWEEN 0 AND '.$request->scholarship;
+        }
 
         // Your raw SQL query
         $query = 'SELECT DISTINCT '.$select.' FROM universities '.$join.' WHERE 1'.$where.' '.$withoutany.'';
@@ -127,9 +135,9 @@ class CourseSearchController extends Controller
         $result_count = count($results);
 
         if(!empty($request->courses) || !empty($request->university)) {
-            return view('course-search.partials.course_university', compact('search', 'result_count'))->render();
+            return view('programs.course-search.partials.course_university', compact('search', 'result_count'))->render();
         } else {
-            return view('course-search.partials.other', compact('search', 'result_count'))->render();
+            return view('programs.course-search.partials.other', compact('search', 'result_count'))->render();
         }
 
 

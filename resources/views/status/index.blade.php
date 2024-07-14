@@ -519,7 +519,7 @@
             </div>
             <h3>Please return later.</h3>
             <div class="our_services_btn text-center">
-                <a class="hvr-sweep-to-right back-home p-3 px-5" href="{{ route('home') }}" class="bttn"><i
+                <a class="hvr-sweep-to-right back-home p-3 px-5" href="{{ route('dashboard') }}" class="bttn"><i
                         class="fa-solid fa-arrow-left"></i> Back to Home</a>
             </div>
         @endif

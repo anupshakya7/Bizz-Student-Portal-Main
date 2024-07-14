@@ -16,11 +16,12 @@
 </head>
 
 <body>
+    @if(auth()->check())
     <header>
         @include('partials.sidenav')
         @include('partials.navbar')
     </header>
     <div class="innerpage">
         <div class="container">
-
+    @endif
     

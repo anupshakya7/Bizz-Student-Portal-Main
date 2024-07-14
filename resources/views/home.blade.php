@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{route('home')}}">
         <img src="{{asset('images/logo-uk.png')}}" alt="logo" class="full_logo">
         </a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-button" href="#">Login</a>
+                    <a class="nav-link nav-button" href="{{route('login')}}">Login</a>
                 </li>
             </ul>
         </div>
@@ -43,8 +43,8 @@
             <h2>Unlock Your Potential</h2>
             <p>Gain the access you need to achieve your strategic goals. Connect with us today to benefit from the rich collaboration between universities, education consultants, and students.</p>
             <div class="buttons">
-                <a href="" class="btn btn-button btn-white">Join Us</a>
-                <a href="" class="btn btn-button btn-white">Sign In</a>
+                <a href="{{route('register')}}" class="btn btn-button btn-white">Join Us</a>
+                <a href="{{route('login')}}" class="btn btn-button btn-white">Sign In</a>
             </div>
         </div>
     </div>
@@ -141,8 +141,8 @@
             <p>If you have any business related questions, or concerns, please send us a message and a member of our team will get in touch with you.</p>
           </div>
         </div>
-          <div class="col-lg-2 "> 
-            <a href="" class="btn btn-button btn-white">Contact Us</a> 
+          <div class="col-lg-3"> 
+            <a href="{{route('register')}}" class="btn btn-button btn-white">Join Us</a> 
           </div>
         </div>
   </div>
@@ -202,10 +202,10 @@
           <h4>Join Us</h4>
           <ul class="footer-links">
             <li>
-              <a href="/login">Sign In</a>
+              <a href="{{route('login')}}">Sign In</a>
             </li>
             <li>
-              <a href="">Register</a>
+              <a href="{{route('register')}}">Register</a>
             </li>
           </ul>
         </div>
