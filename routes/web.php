@@ -83,10 +83,7 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
             Route::get('/filter_intake', [CourseSearchController::class, 'filterIntake'])->name('api.filterIntakemonth');
         });
 
-        Route::prefix('compare-program')->group(function(){
-            Route::get('/',[CompareController::class,'index'])->name('compare.index');
-            Route::get('/compare',[CompareController::class,'compare'])->name('compare');
-        });
+        //Compare Route
 
         Route::group(['middleware' => ['verify_mobile']], function () {
             //Courses Apply Form Route
@@ -101,4 +98,9 @@ Route::group(['middleware' => ['revalidate_back_history']], function () {
             });
         });
     });
+    Route::prefix('compare-program')->group(function(){
+        Route::get('/',[CompareController::class,'index'])->name('compare.index');
+        Route::get('/compare',[CompareController::class,'compare'])->name('compare');
+    });
 });
+

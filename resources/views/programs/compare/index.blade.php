@@ -38,62 +38,10 @@
                 <div class="loader" id="loader" style="display:none;justify-content:center;margin-top:40px;">
                     <img src="{{ asset('images/loader.gif') }}">
                 </div>
-                <div class="search_result intake" id="result_without_course_university">
-                    <div class="search_result_inner">
-                        <div class="row g-0 p-0">
-                            <div class="col-sm-5 border-line equal_height d-flex align-items-end">
-                                <div style="display:inline-block; width:100%;">
-                                    <div class="university_logo text-center">
-                                        <img src="https://mis.bizzeducation.com/backend/web/" alt="">
-                                    </div>
-                                    <h5 class="uni_name d-none d-sm-flex"></h5>
-                                    <div class="location d-none d-sm-flex justify-content-center">
-                                        <h4></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-7 border-line ">
-                                <div class="uni_details equal_height">
-                                    <ul class="heading-top">
-                                        <li class="red justify-content-center"></li>
-                                        <li class="justify-content-center"></li>
-                                    </ul>
-                                    <h3 class="text-center"></h3>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Requirements</th>
-                                                <th>IELTS</th>
-                                                <th>PTE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Fees</th>
-                                                <th>Scholarship</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                <div class="search_result intake">
+                    <div class="search_result_inner boxDesign">
+                        <h3>Please Select Course</h3>
                     </div>
-                    <h3 style="margin: 30px; text-align: center;">Data Not Found</h3>
                 </div>
             </div>
         </div>
@@ -134,62 +82,10 @@
                 <div class="loader" id="loader" style="display:none;justify-content:center;margin-top:40px;">
                     <img src="{{ asset('images/loader.gif') }}">
                 </div>
-                <div class="search_result intake" id="result_without_course_university">
-                    <div class="search_result_inner">
-                        <div class="row g-0 p-0">
-                            <div class="col-sm-5 border-line equal_height d-flex align-items-end">
-                                <div style="display:inline-block; width:100%;">
-                                    <div class="university_logo text-center">
-                                        <img src="https://mis.bizzeducation.com/backend/web/" alt="">
-                                    </div>
-                                    <h5 class="uni_name d-none d-sm-flex"></h5>
-                                    <div class="location d-none d-sm-flex justify-content-center">
-                                        <h4></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-7 border-line ">
-                                <div class="uni_details equal_height">
-                                    <ul class="heading-top">
-                                        <li class="red justify-content-center"></li>
-                                        <li class="justify-content-center"></li>
-                                    </ul>
-                                    <h3 class="text-center"></h3>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Requirements</th>
-                                                <th>IELTS</th>
-                                                <th>PTE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Fees</th>
-                                                <th>Scholarship</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                <div class="search_result intake">
+                    <div class="search_result_inner boxDesign">
+                        <h3>Please Select Course</h3>
                     </div>
-                    <h3 style="margin: 30px; text-align: center;">Data Not Found</h3>
                 </div>
             </div>
         </div>
@@ -200,7 +96,6 @@
     $(document).ready(function(){
         $('.university').change(function(){
             let university = $(this).val();
-            console.log(university);
 
             if(university != ""){
                 let closestCourses = $(this).closest('form').find('.courses');
@@ -221,6 +116,93 @@
                 });
             }
         });
+
+        $('.university,.courses').change(function(){
+            let university_id = $(this).closest('form').find('.university').val();
+            let courses_id = $(this).closest('form').find('.courses').val();
+            if(university_id != "" && courses_id != ""){
+                let boxDesign = $(this).closest('.col-md-6').find('.boxDesign');
+                let loader = $(this).closest('.col-md-6').find('.loader');
+                universityResult(university_id,courses_id,boxDesign,loader);
+            }
+        });
+
+        function universityResult(university,course,boxDesign,loader){
+            loader.css('display','flex');
+            $.ajax({
+                url:"{{route('compare')}}",
+                method:"GET",
+                data:{
+                    university:university,
+                    course:course
+                },
+                success:function(response){
+                    if(response.result != "No Result Found"){
+                        let result = response.result;
+                        console.log(result);
+                        loader.css('display','none');
+                        boxDesign.html('');
+                        boxDesign.append('<div class="search_result_inner boxDesign">\
+                        <div class="row g-0 p-0">\
+                            <div class="col-sm-5 border-line equal_height d-flex align-items-end">\
+                                <div style="display:inline-block; width:100%;">\
+                                    <div class="university_logo text-center">\
+                                        <img src="https://mis.bizzeducation.com/backend/web/'+result.logo+'" alt="">\
+                                    </div>\
+                                    <h5 class="uni_name d-none d-sm-flex">'+result.university+'</h5>\
+                                    <div class="location d-none d-sm-flex justify-content-center">\
+                                        <h4>'+result.country+'</h4>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class="col-sm-7 border-line ">\
+                                <div class="uni_details equal_height">\
+                                    <ul class="heading-top">\
+                                        <li class="red justify-content-center">'+result.intake+'</li>\
+                                        <li class="justify-content-center">'+result.level+'</li>\
+                                    </ul>\
+                                    <h3 class="text-center">'+result.course_title+'</h3>\
+                                    <table>\
+                                        <thead>\
+                                            <tr>\
+                                                <th>Requirements</th>\
+                                                <th>IELTS</th>\
+                                                <th>PTE</th>\
+                                            </tr>\
+                                        </thead>\
+                                        <tbody>\
+                                            <tr>\
+                                                <td>'+result.course_title+'</td>\
+                                                <td>'+result.ielts_requirement+'</td>\
+                                                <td>'+result.pte_requirement+'</td>\
+                                            </tr>\
+                                        </tbody>\
+                                    </table>\
+                                    <table>\
+                                        <thead>\
+                                            <tr>\
+                                                <th>Fees</th>\
+                                                <th>Scholarship</th>\
+                                            </tr>\
+                                        </thead>\
+                                        <tbody>\
+                                            <tr>\
+                                                <td>'+(result.tuition_fees ? result.tuition_fees:0)+'</td>\
+                                                <td>'+(result.scholarship ? result.scholarship:0)+'</td>\
+                                            </tr>\
+                                        </tbody>\
+                                    </table>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>');
+                    }else{
+                        boxDesign.html('');
+                        boxDesign.append('<h3 style="margin: 30px; text-align: center;">Data Not Found</h3>'); 
+                    }
+                }
+            })
+        }
     });
 </script>
 @endsection
