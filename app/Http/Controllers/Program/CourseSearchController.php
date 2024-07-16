@@ -100,12 +100,12 @@ class CourseSearchController extends Controller
                 $where .= ' AND universities.uni_intake LIKE "%'.$request->intake.'%"';
             }
         }
-        if((isset($request->minfees) && !empty($request->minfees)) && (isset($request->maxfees) && !empty($request->maxfees))) {
+        if((isset($request->minfees)) && (isset($request->maxfees) && !empty($request->maxfees))) {
             $where .= ' AND uni_course.tuition_fees BETWEEN '.$request->minfees.' AND '.$request->maxfees;
         }
 
-        if(isset($request->scholarship) && !empty($request->scholarship)) {
-            $where .= ' AND uni_course.scholarship BETWEEN 0 AND '.$request->scholarship;
+        if((isset($request->minscholarship)) && (isset($request->maxscholarship) && !empty($request->maxscholarship))) {
+            $where .= ' AND uni_course.scholarship BETWEEN '.$request->minscholarship.' AND '.$request->maxscholarship;
         }
 
         // Your raw SQL query
