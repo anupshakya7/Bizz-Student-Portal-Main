@@ -40,7 +40,7 @@
                 </div>
                 <div class="search_result intake">
                     <div class="search_result_inner boxDesign">
-                        <h3>Please Select Course</h3>
+                        <h3>Please Select University & Course</h3>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="search_result intake">
                     <div class="search_result_inner boxDesign">
-                        <h3>Please Select Course</h3>
+                        <h3>Please Select University & Course</h3>
                     </div>
                 </div>
             </div>
